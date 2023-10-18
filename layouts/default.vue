@@ -1,3 +1,7 @@
+<script setup>
+    const { locale } = useI18n()
+</script>
+
 <template>
     <div>
         <header>
@@ -11,10 +15,16 @@
                     <NuxtLink class="nav-link" to="/logs">Análisis logs (Cortex XDR)</NuxtLink>
                     <NuxtLink class="nav-link" to="/headers">Análisis cabeceras mail</NuxtLink>
                     <NuxtLink class="nav-link" to="/resources">Recursos</NuxtLink>
-                    <NuxtLink class="nav-link" to="/databases">Bases de datos de malware</NuxtLink>
+                    <NuxtLink class="nav-link" to="/databases">{{ $t("databasesNav")}}</NuxtLink>
                     <NuxtLink class="nav-link" to="/blog">Blog</NuxtLink>
                 </div>
                 </div>
+                <form>
+                <select class="form-select" v-model="locale">
+                    <option value="en">En 🇺🇸</option>
+                    <option value="es">Es 🇪🇸</option>
+                </select>
+                </form>
             </nav>
         </header>
         <div>
