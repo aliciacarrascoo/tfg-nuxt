@@ -1,5 +1,13 @@
 <script setup>
+    const client = useSupabaseClient()
+    const user = useSupabaseUser()
     const { locale } = useI18n()
+
+    const logout = async () => {
+        console.log("logged out")
+        await client.auth.signOut()
+        navigateTo('/login')
+    } 
 </script>
 
 <template>
@@ -16,6 +24,8 @@
                     <NuxtLink class="nav-link" to="/resources">Recursos</NuxtLink>
                     <NuxtLink class="nav-link" to="/databases">{{ $t("databasesNav")}}</NuxtLink>
                     <NuxtLink class="nav-link" to="/blog">Blog</NuxtLink>
+                    <button class="btn btn-secondary btn-sm" @click="logout" v-if="user">logout</button> 
+                    <div v-if="user && user.value != undefined">{{"logged in"}} </div>
                 </div>
                 </div>
                 <form>
