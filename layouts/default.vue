@@ -13,7 +13,6 @@
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
                     <NuxtLink class="nav-link" to="/logs">Análisis logs (Cortex XDR)</NuxtLink>
-                    <NuxtLink class="nav-link" to="/headers">Análisis cabeceras mail</NuxtLink>
                     <NuxtLink class="nav-link" to="/resources">Recursos</NuxtLink>
                     <NuxtLink class="nav-link" to="/databases">{{ $t("databasesNav")}}</NuxtLink>
                     <NuxtLink class="nav-link" to="/blog">Blog</NuxtLink>
@@ -27,7 +26,7 @@
                 </form>
             </nav>
         </header>
-        <div>
+        <div class="p-4">
             <slot />
         </div>
     </div>
