@@ -12,7 +12,9 @@
         }
     )
     async function onLoginClick(){
-       const { data, error } = await supabase.auth.signInWithOAuth({ provider: 'github'})
+       const { data, error } = await supabase.auth.signInWithOAuth({ provider: 'github',  options: {
+      redirectTo: 'http://localhost:3000/confirm',
+    },})
        console.error(data)
     }                                                 
     </script>

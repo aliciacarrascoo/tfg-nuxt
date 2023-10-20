@@ -4,10 +4,9 @@
     const { locale } = useI18n()
 
     const logout = async () => {
-        console.log("logged out")
         await client.auth.signOut()
         navigateTo('/login')
-    } 
+    }
 </script>
 
 <template>
