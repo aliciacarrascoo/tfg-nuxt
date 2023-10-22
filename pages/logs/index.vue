@@ -27,7 +27,7 @@ async function fileChange() {
           @change="fileChange"
         />
       </div>
-      <Button class="btn btn-primary ml-auto">{{ $t("analizeLogs") }}</Button>
+      <Button @click='navigateTo("/logs/result")'>{{ $t("analizeLogs") }}</Button>
     </div>
   </div>
 </template>
