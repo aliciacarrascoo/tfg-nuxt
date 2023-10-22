@@ -1,14 +1,13 @@
 <script setup>
-    const logs = ref("");
-    const fileInput = ref(null)
-    async function fileChange(){
-        
-        console.log(fileInput.value?.files)
-        const file = fileInput.value?.files[0]
-        if (file) {
-            logs.value = await file.text()
-        }
-    }
+const logs = ref("");
+const fileInput = ref(null);
+async function fileChange() {
+  console.log(fileInput.value?.files);
+  const file = fileInput.value?.files[0];
+  if (file) {
+    logs.value = await file.text();
+  }
+}
 </script>
 
 <template>
@@ -20,7 +19,13 @@
         <strong>SHA256</strong>
       </div>
       <div class="col-8">
-        <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="24HFIR83472DKF">
+        <input
+          type="text"
+          readonly
+          class="form-control-plaintext"
+          id="staticEmail"
+          value="24HFIR83472DKF"
+        />
       </div>
       <div class="col-2">
         <button class="btn btn-primary ml-auto">VirusTotal</button>
@@ -32,7 +37,13 @@
         <strong>Mitre att&ck</strong>
       </div>
       <div class="col-10">
-        <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="MA1, MA2, MA3...">
+        <input
+          type="text"
+          readonly
+          class="form-control-plaintext"
+          id="staticEmail"
+          value="MA1, MA2, MA3..."
+        />
       </div>
     </div>
     <!------ALERT------>
@@ -41,7 +52,13 @@
         <strong>Alert</strong>
       </div>
       <div class="col-8">
-        <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="Ransomware">
+        <input
+          type="text"
+          readonly
+          class="form-control-plaintext"
+          id="staticEmail"
+          value="Ransomware"
+        />
       </div>
       <div class="col-1 align-items-center d-flex">
         <strong>Severity</strong>
@@ -60,7 +77,13 @@
         <strong>Alert description</strong>
       </div>
       <div class="col-10">
-        <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="Blablablablablablablalbblalbalbalb">
+        <input
+          type="text"
+          readonly
+          class="form-control-plaintext"
+          id="staticEmail"
+          value="Blablablablablablablalbblalbalbalb"
+        />
       </div>
     </div>
     <!------CONTEXT------>
@@ -69,7 +92,13 @@
         <strong>Context</strong>
       </div>
       <div class="col-10">
-        <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="IP: xxxxxx, route: xxxxx">
+        <input
+          type="text"
+          readonly
+          class="form-control-plaintext"
+          id="staticEmail"
+          value="IP: xxxxxx, route: xxxxx"
+        />
       </div>
     </div>
     <!------RECOMENDATION------>
@@ -78,7 +107,13 @@
         <strong>Recomendation</strong>
       </div>
       <div class="col-10">
-        <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="Blablabla">
+        <input
+          type="text"
+          readonly
+          class="form-control-plaintext"
+          id="staticEmail"
+          value="Blablabla"
+        />
       </div>
     </div>
     <!------BUTTONS------>

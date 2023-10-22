@@ -1,3 +1,3 @@
 export default defineEventHandler((event) => {
- return { log: 'this is a log' } 
-})
+  return { log: "this is a log" };
+});

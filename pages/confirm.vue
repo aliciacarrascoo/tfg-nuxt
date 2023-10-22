@@ -1,16 +1,18 @@
 <script setup>
-    const user = useSupabaseUser()
-    watch(user, () => {
+const user = useSupabaseUser();
+watch(
+  user,
+  () => {
     if (user.value) {
-        return navigateTo('/logs')
+      return navigateTo("/");
     }
-    }, { immediate: true })
+  },
+  { immediate: true },
+);
 </script>
 
 <template>
   <div>
-    <p> 
-      Redirecting...
-    </p>
+    <p>Redirecting...</p>
   </div>
 </template>
