@@ -16,7 +16,13 @@ async function fileChange() {
   <div class="grid grid-cols-12 p-20">
     <div class="col-span-2"><strong>SHA256</strong></div>
     <div class="col-span-8">
-      <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="24HFIR83472DKF"/>
+      <input
+        type="text"
+        readonly
+        class="form-control-plaintext"
+        id="staticEmail"
+        value="24HFIR83472DKF"
+      />
     </div>
     <div class="col-span-2">
       <button class="btn btn-primary ml-auto">VirusTotal</button>
@@ -98,12 +104,20 @@ async function fileChange() {
     </div>
     <!------BUTTONS------>
     <div class="col-span-2">
-      <Button @click='navigateTo("/logs")'>BACK</Button>
+      <Button @click="navigateTo('/logs')">BACK</Button>
     </div>
     <div class="col-span-8"></div>
     <div class="col-span-2">
-      <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
-        <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/></svg>
+      <button
+        class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+      >
+        <svg
+          class="fill-current w-4 h-4 mr-2"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+        >
+          <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+        </svg>
         <span>Export</span>
       </button>
     </div>

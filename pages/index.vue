@@ -1,8 +1,6 @@
-<script>
-  
-</script>
+<script></script>
 <template>
   <h2>Home page</h2>
   <h3>Logs</h3>
-  <UserLogs/>
+  <UserLogs />
 </template>

@@ -1,9 +1,9 @@
 <script setup>
-const { locale } = useI18n()
+const { locale } = useI18n();
 
 const setLocale = (language) => {
-    locale.value = language
-}
+  locale.value = language;
+};
 </script>
 
 <template>
