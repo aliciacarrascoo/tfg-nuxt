@@ -10,9 +10,9 @@ watchEffect(() => {
   }
 });
 
-async function onLoginClick() {
+async function onLoginClick(provider) {
   const { data, error } = await supabase.auth.signInWithOAuth({
-    provider: "github",
+    provider,
     options: {
       redirectTo: "http://localhost:3000/confirm",
     },
@@ -103,7 +103,7 @@ async function onLoginClick() {
               </button>
               <button
                 class="text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-20 py-2.5 text-center inline-flex items-center justify-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 mb-2"
-                @click="onLoginClick"
+                @click="() => onLoginClick('github')"
               >
                 <div class="flex items-center">
                   <Icon name="uil:github" class="mr-2" />
@@ -112,7 +112,7 @@ async function onLoginClick() {
               </button>
               <button
                 class="text-black bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-20 py-2.5 text-center inline-flex items-center justify-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 mb-2"
-                @click="onLoginClick"
+                @click="() => onLoginClick('google')"
               >
                 <div class="flex items-center">
                   <Icon name="logos:google-icon" class="mr-2" />
