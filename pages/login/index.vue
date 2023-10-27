@@ -23,7 +23,9 @@ async function onLoginClick(provider) {
 
 <template>
   <div class="w-100 h-full flex flex-column">
-    <section class="p-5 w-full h-full flex flex-col justify-center bg-gray-50 dark:bg-gray-900">
+    <section
+      class="p-5 w-full h-full flex flex-col justify-center bg-gray-50 dark:bg-gray-900"
+    >
       <div
         class="flex flex-col items-center md:justify-start justify-center px-6 py-8 mx-auto md:h-screen lg:py-0"
       >

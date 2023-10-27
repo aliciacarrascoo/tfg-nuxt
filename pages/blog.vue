@@ -1,1 +1,3 @@
-<template></template>
+<template>
+    <Page title="Blog"> </Page>
+</template>

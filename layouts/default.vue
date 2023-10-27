@@ -90,7 +90,11 @@ const logout = async () => {
                 >
               </li>
               <li v-if="user" class="flex items-center">
-                <Button buttonType="text" @click="logout" class="block py-2 pl-3 pr-2">
+                <Button
+                  buttonType="text"
+                  @click="logout"
+                  class="block py-2 pl-3 pr-2"
+                >
                   {{ $t("Logout") }}
                 </Button>
                 <span class="text-gray-600">
