@@ -1,3 +1,3 @@
 <template>
-    <Page title="Resources"> </Page>
+  <Page title="Resources"> </Page>
 </template>
