@@ -31,8 +31,10 @@
     "vue-router": "^4.2.5"
   },
   "dependencies": {
+    "@pinia/nuxt": "^0.5.1",
     "@popperjs/core": "^2.11.8",
     "flowbite": "^1.8.1",
+    "pinia": "^2.1.7",
     "sass": "^1.69.3",
     "sass-loader": "^13.3.2"
   }

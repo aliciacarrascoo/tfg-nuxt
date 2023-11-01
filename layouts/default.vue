@@ -2,6 +2,8 @@
 const client = useSupabaseClient();
 const user = useSupabaseUser();
 const mobileMenuIsOpen = ref(false);
+const loadingStore = useLoadingStore();
+const { isLoading } = storeToRefs(loadingStore);
 
 const logout = async () => {
   await client.auth.signOut();
@@ -106,6 +108,15 @@ const logout = async () => {
         </div>
       </nav>
     </header>
+    <div
+      class="w-full bg-transparent rounded-full h-1.5 absolute top-[72px]"
+      :class="{ invisible: !isLoading }"
+    >
+      <div
+        :class="[isLoading ? 'w-11/12' : 'w-0']"
+        class="bg-blue-600 h-1.5 rounded-full dark:bg-blue-500 custom-transition"
+      ></div>
+    </div>
     <div class="flex-1">
       <slot />
     </div>
@@ -115,5 +126,10 @@ const logout = async () => {
 <style>
 .h-40px {
   height: 40px;
+}
+.custom-transition {
+  transition-property: width;
+  transition-duration: 20000ms;
+  transition-timing-function: cubic-bezier(0, 1.03, 0, 1);
 }
 </style>
