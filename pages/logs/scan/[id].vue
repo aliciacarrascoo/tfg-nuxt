@@ -6,6 +6,6 @@ console.log(route.params);
 <template>
   <Page title="Scan Results">
     {{ route.params.id }}
-    <LogResults />
+    <LogScan />
   </Page>
 </template>

@@ -1,7 +1,6 @@
 <script setup>
 const client = useSupabaseClient();
 const user = useSupabaseUser();
-const logs = ref([]);
 const { data } = await useAsyncData("results", async () => {
   return await client
     .from("results")

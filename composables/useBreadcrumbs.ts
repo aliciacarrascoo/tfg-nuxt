@@ -14,7 +14,6 @@ const isMathPatternPath = (pathA: string, pathB: string) => {
 };
 
 export const useBreadcrumbs = () => {
-  console.log("useBreadcrumbs");
   const router = useRouter();
   const route = useRoute();
   const routes = router.getRoutes();

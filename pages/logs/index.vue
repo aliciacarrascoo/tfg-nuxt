@@ -13,12 +13,28 @@ async function fileChange() {
 
 async function analizeLogs() {
   loadingStore.setLoading(true);
-  const { data } = await useFetch("/api/logs/result", {
-    method: "post",
-    body: JSON.stringify({ logs: logs.value }),
-  });
+  const client = useSupabaseClient();
+  const user = useSupabaseUser();
+
+  const { data, error } = await client
+    .from("scans")
+    .insert([
+      {
+        sha256:
+          "935c1861df1f4018d698e8b65abfa02d7e9037d8f68ca3c2065b6ca165d44ad2",
+        mitre_attack: "alex",
+        severity: 3,
+        alert_description:
+          "regedit.exe registered a script to be run on the next login or boot. This script was registered on 0 other endpoints. The script was registered at HKEY_LOCAL_MACHINE\\\\SOFTWARE\\\\WOW6432Node\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\RunOnce, in the UnKES registry value. The registered script is wscript.exe //b C:\\\\Users\\\\PRDAA2~1\\\\AppData\\\\Local\\\\Temp\\\\UnKES.vbs",
+        context: "IP: 172.17.17.17 User: alex",
+        recomendation: "Told to alex and look if is a legitim action",
+        alert: "Script file added to startup-related Registry keys",
+        user: user.value.id
+      },
+    ])
+    .select();
   loadingStore.setLoading(false);
-  navigateTo(`/logs/scan/${data.value.id}`);
+  //navigateTo(`/logs/scan/${data.value.id}`);
 }
 </script>
 
