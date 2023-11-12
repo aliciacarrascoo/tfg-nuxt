@@ -36,6 +36,7 @@
     "flowbite": "^1.8.1",
     "pinia": "^2.1.7",
     "sass": "^1.69.3",
-    "sass-loader": "^13.3.2"
+    "sass-loader": "^13.3.2",
+    "vue-json-viewer": "^3.0.4"
   }
 }

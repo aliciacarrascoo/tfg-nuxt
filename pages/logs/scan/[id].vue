@@ -5,7 +5,6 @@ console.log(route.params);
 
 <template>
   <Page title="Scan Results">
-    {{ route.params.id }}
-    <LogScan />
+    <LogScan :id='route.params.id' />
   </Page>
 </template>
