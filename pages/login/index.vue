@@ -14,7 +14,7 @@ async function onLoginClick(provider) {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider,
     options: {
-      redirectTo: "http://localhost:3000/confirm",
+      redirectTo: "https://tfg-nuxt.vercel.app/confirm",
     },
   });
   console.error(data);
