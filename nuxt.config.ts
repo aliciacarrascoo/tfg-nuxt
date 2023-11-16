@@ -15,4 +15,9 @@ export default defineNuxtConfig({
   imports: {
     dirs: ["stores"],
   },
+  runtimeConfig: {
+    public: {
+      redirectUrl: ''
+    }
+  }
 });
