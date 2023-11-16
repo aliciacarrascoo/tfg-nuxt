@@ -24,7 +24,7 @@ const logout = async () => {
               >{{ getConfig("siteName") }}
             </span>
           </NuxtLink>
-          <div class="flex items-center lg:order-2 flex lg:hidden">
+          <div class="flex items-center lg:order-2 klg:hidden">
             <button
               @click="mobileMenuIsOpen = !mobileMenuIsOpen"
               type="button"
@@ -102,6 +102,9 @@ const logout = async () => {
                 <span class="text-gray-600">
                   {{ `(${user.email})` }}
                 </span>
+              </li>
+              <li>
+                <LanguageSelector />
               </li>
             </ul>
           </div>
