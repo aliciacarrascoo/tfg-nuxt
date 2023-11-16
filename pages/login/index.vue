@@ -1,6 +1,6 @@
 <script setup>
 import { watchEffect } from "vue";
-
+const config = useRuntimeConfig();
 const supabase = useSupabaseClient();
 const user = useSupabaseUser();
 
@@ -9,12 +9,12 @@ watchEffect(() => {
     navigateTo("/");
   }
 });
-
+console.log('login redirect url: ', config.public.redirectUrl)
 async function onLoginClick(provider) {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider,
     options: {
-      redirectTo: "http://localhost:3000/confirm",
+      redirectTo: config.public.redirectUrl,
     },
   });
   console.error(data);
