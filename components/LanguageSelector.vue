@@ -24,9 +24,7 @@ const setLocale = (language) => {
     id="language-dropdown-menu"
   >
     <ul class="py-2 font-medium" role="none">
-
       <li v-for="(item, index) in Object.values(getLanguages())">
-        {{ console.log(item) }}
         <button
           class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
           @click="setLocale(item.id)"
@@ -34,7 +32,6 @@ const setLocale = (language) => {
           <div class="inline-flex items-center">{{ item.name }}</div>
         </button>
       </li>
-
     </ul>
   </div>
 </template>

@@ -1,5 +1,4 @@
 <script setup>
-
 const logs = ref("");
 const fileInput = ref(null);
 
@@ -17,24 +16,40 @@ async function analizeLogs() {
   const client = useSupabaseClient();
   const user = useSupabaseUser();
   let logsObject = JSON.parse(logs.value);
-  logsObject = logsObject['original_alert_json'] || logsObject
+  logsObject = logsObject["original_alert_json"] || logsObject;
   const body = {
-      sha256: logsObject['raw_abioc']?.['event']?.['causality_actor_process_image_sha256'] || logsObject['SHA256'],
-      mitre_attack: logsObject['mitre_attack'] || logsObject['mittre attack'] || logsObject['Mittre attack'] || logsObject['Mittre Attack'] || logsObject['mitreAttack'],
-      severity: logsObject['severity'] || logsObject['Severity'] || logsObject['SEVERITY'],
-      alert_description: logsObject['alert_description'] || logsObject['Alert description'] || logsObject['Alert Description'] || logsObject['alertDescription'],
-      context: logsObject['context'] || logsObject['Context'] || logsObject['CONTEXT'],
-      recomendation: logsObject['recomendation'] || logsObject['Recomendation'] || logsObject['RECOMENDATION'],
-      alert: logsObject['alert'] || logsObject['alert'] || logsObject['ALERT'],
+    sha256:
+      logsObject["raw_abioc"]?.["event"]?.[
+        "causality_actor_process_image_sha256"
+      ] || logsObject["SHA256"],
+    mitre_attack:
+      logsObject["mitre_attack"] ||
+      logsObject["mittre attack"] ||
+      logsObject["Mittre attack"] ||
+      logsObject["Mittre Attack"] ||
+      logsObject["mitreAttack"],
+    severity:
+      logsObject["severity"] ||
+      logsObject["Severity"] ||
+      logsObject["SEVERITY"],
+    alert_description:
+      logsObject["alert_description"] ||
+      logsObject["Alert description"] ||
+      logsObject["Alert Description"] ||
+      logsObject["alertDescription"],
+    context:
+      logsObject["context"] || logsObject["Context"] || logsObject["CONTEXT"],
+    recomendation:
+      logsObject["recomendation"] ||
+      logsObject["Recomendation"] ||
+      logsObject["RECOMENDATION"],
+    alert: logsObject["alert"] || logsObject["alert"] || logsObject["ALERT"],
     user: user.value.id,
-      log: logsObject,
-  } 
-  const { data, error } = await client
-    .from("scans")
-    .insert(body)
-    .select();
+    log: logsObject,
+  };
+  const { data, error } = await client.from("scans").insert(body).select();
 
-  console.log(data, "data")
+  console.log(data, "data");
   loadingStore.setLoading(false);
   navigateTo(`/logs/scan/${data[0].result_id}`);
 }
@@ -67,11 +82,6 @@ async function analizeLogs() {
         <Icon name="ic:round-arrow-forward-ios" class="ml-2" />
       </div>
     </Button>
-    <div id="json-result">
-
-    </div>
+    <div id="json-result"></div>
   </Page>
 </template>
-
-
-

@@ -17,7 +17,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      redirectUrl: ''
-    }
-  }
+      redirectUrl: "",
+    },
+  },
 });

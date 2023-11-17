@@ -9,7 +9,7 @@ watchEffect(() => {
     navigateTo("/");
   }
 });
-console.log('login redirect url: ', config.public.redirectUrl)
+console.log("login redirect url: ", config.public.redirectUrl);
 async function onLoginClick(provider) {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider,
