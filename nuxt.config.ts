@@ -7,8 +7,10 @@ export default defineNuxtConfig({
     "@nuxtjs/i18n",
     "nuxt-icon",
     "@nuxtjs/tailwindcss",
+    "@nuxtjs/color-mode",
     ["@pinia/nuxt", { autoImports: ["defineStore", "acceptHMRUpdate"] }],
   ],
+  colorMode: {classSuffix: ''},
   i18n: {
     vueI18n: "./i18n.config.ts", // if you are using custom path, default
   },

@@ -6,28 +6,17 @@
     createColumnHelper,
   } from "@tanstack/vue-table";
   import type { Role } from '~/types';
-  
+  const client = useSupabaseClient();
+  const { data } = await useAsyncData("users", async () => {
+    return await client.from("users").select("*");
+  });
+  console.log(data)
   type User = {
     fullName: string;
     email: string;
     role: Role;
     lastConnection: string;
-  };
-
-  const data = ref<Array<User>>([
-    {
-      fullName: "tanner",
-      email: "tanner@gmail.com",
-      role: "admin",
-      lastConnection: "12-03-12"
-    },
-    {
-      fullName: "alex",
-      email: "alex@gmail.com",
-      role: "admin",
-      lastConnection: "12-03-12"
-    }
-  ]);
+  }; 
 
   const columnHelper = createColumnHelper<User>();
 
@@ -49,7 +38,6 @@
       footer: (props) => props.column.id,
     }),
   ];
-
 </script>
 
 <template>

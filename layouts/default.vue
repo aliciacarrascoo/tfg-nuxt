@@ -4,6 +4,8 @@ const user = useSupabaseUser();
 const mobileMenuIsOpen = ref(false);
 const loadingStore = useLoadingStore();
 const { isLoading } = storeToRefs(loadingStore);
+const colorMode = useColorMode();
+colorMode.preference = "light";
 
 const logout = async () => {
   await client.auth.signOut();
@@ -86,7 +88,7 @@ const logout = async () => {
               </li>
               <li>
                 <NuxtLink
-                  to="/userManagement"
+                  to="/user-management"
                   class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:hover:text-blue-700 lg:p-0 dark:text-white lg:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
                   >User management</NuxtLink
                 >
