@@ -22,16 +22,27 @@ async function analizeLogs() {
       logsObject["raw_abioc"]?.["event"]?.[
         "causality_actor_process_image_sha256"
       ] || logsObject["SHA256"],
-    mitre_attack:
-      logsObject["mitre_attack"] ||
-      logsObject["mittre attack"] ||
-      logsObject["Mittre attack"] ||
-      logsObject["Mittre Attack"] ||
-      logsObject["mitreAttack"],
+    mitre_tactic:
+      logsObject["mitre_tactic_ids"] ||
+      logsObject["mittre tactic"] ||
+      logsObject["Mittre tactic"] ||
+      logsObject["Mittre Tactic"] ||
+      logsObject["mitretactic"],
+    mitre_technique:
+      logsObject["mitre_technique_ids"] ||
+      logsObject["mittre technique"] ||
+      logsObject["Mittre technique"] ||
+      logsObject["Mittre Technique"] ||
+      logsObject["mitretechnique"],
     severity:
       logsObject["severity"] ||
       logsObject["Severity"] ||
       logsObject["SEVERITY"],
+    alert:
+      logsObject["alert_name"] ||
+      logsObject["alert"] ||
+      logsObject["alert"] ||
+      logsObject["ALERT"],
     alert_description:
       logsObject["alert_description"] ||
       logsObject["Alert description"] ||
@@ -43,7 +54,6 @@ async function analizeLogs() {
       logsObject["recomendation"] ||
       logsObject["Recomendation"] ||
       logsObject["RECOMENDATION"],
-    alert: logsObject["alert"] || logsObject["alert"] || logsObject["ALERT"],
     user: user.value.id,
     log: logsObject,
   };
