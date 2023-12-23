@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "install-changed && nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
@@ -23,6 +23,7 @@
     "eslint": "^8.52.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
+    "install-changed": "^1.1.0",
     "nuxt": "^3.7.4",
     "nuxt-icon": "^0.5.0",
     "prettier": "^3.0.3",
@@ -31,6 +32,7 @@
     "vue-router": "^4.2.5"
   },
   "dependencies": {
+    "@headlessui/vue": "^1.7.16",
     "@nuxtjs/color-mode": "^3.3.2",
     "@pinia/nuxt": "^0.5.1",
     "@popperjs/core": "^2.11.8",

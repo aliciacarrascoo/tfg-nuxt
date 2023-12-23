@@ -5,14 +5,25 @@ import {
   useVueTable,
   createColumnHelper,
 } from "@tanstack/vue-table";
-import type { Role } from "~/types";
+import type { Role } from "../../types";
 
+const modalIsOpen = ref(false);
+function setModalIsOpen(value: boolean) {
+    modalIsOpen.value = value
+}
+const user = useSupabaseUser()
 const client = useSupabaseClient();
 const { data: profiles } = await useAsyncData("profiles", async () => {
   const { data } = await client.from("profiles").select("*");
   return data;
 });
-console.log(profiles);
+
+const { data: currentUserProfile } = await useAsyncData("currentProfile", async () => {
+    if (!user.value) return null;
+  const { data } = await client.from("profiles").select("*").eq("id", user.value.id);
+  return data![0];
+});
+    console.log(currentUserProfile.value)
 type User = {
   id: string;
   full_name: string;
@@ -73,12 +84,15 @@ const columns = [
 
 <template>
   <Page title="Company users">
+    <AddUserToOrganizationModal :isOpen="modalIsOpen" :setIsOpen="setModalIsOpen"/>
     <div class="flex justify-end mb-3">
-      <Button styles="bg-green-700 hover:bg-green-900 px-2 py-1.7 text-xs">
-        <NuxtLink to="/userManagement/create">Create new company</NuxtLink>
+      <Button styles="px-2 py-1.7 text-sm" buttonType="text" v-if="!currentUserProfile!.organization">
+            Create new company
       </Button>
-      <Button styles="bg-green-700 hover:bg-green-900 px-2 py-1.7 text-xs">
-        <NuxtLink to="/userManagement/create">Add user to company</NuxtLink>
+      <Button @click="() => setModalIsOpen(true)" styles="bg-green-700 hover:bg-green-900 px-2 py-1.7 text-xs" v-if="currentUserProfile!.organization && currentUserProfile!.role === 'admin'">
+            <span>
+                Add user to company
+            </span>
       </Button>
     </div>
     <Table :tableData="profiles" :columns="columns" />
