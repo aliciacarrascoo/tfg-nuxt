@@ -16,7 +16,8 @@ console.log("backend:", data);
 const {
   sha256,
   created,
-  mitre_attack,
+  mitre_tactic,
+  mitre_technique,
   severity,
   alert,
   alert_description,
@@ -60,11 +61,21 @@ const types = {
       </h4>
       <span :class="types[severity].class">{{ types[severity].label }}</span>
     </div>
-    <!------MITRE ATT&CK------>
+    <!------SHA256------>
     <div>
-      <strong>Mitre attack</strong>
+      <strong>SHA256</strong>
     </div>
-    <div>{{ mitre_attack || notFound }}</div>
+    <div>{{ sha256 || notFound }}</div>
+    <!------MITRE TACTIC------>
+    <div>
+      <strong>Mitre tactic</strong>
+    </div>
+    <div>{{ mitre_tactic || notFound }}</div>
+    <!------MITRE TECHNIQUE------>
+    <div>
+      <strong>Mitre technique</strong>
+    </div>
+    <div>{{ mitre_technique || notFound }}</div>
     <!------ALERT------>
     <div>
       <strong>Alert</strong>
