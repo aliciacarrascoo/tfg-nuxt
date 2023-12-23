@@ -1,9 +1,5 @@
 <script setup lang="ts">
-import {
-  FlexRender,
-  getCoreRowModel,
-  useVueTable,
-} from "@tanstack/vue-table";
+import { FlexRender, getCoreRowModel, useVueTable } from "@tanstack/vue-table";
 
 const props = defineProps({
   tableData: {
@@ -13,7 +9,7 @@ const props = defineProps({
   columns: {
     type: Array<any>,
     required: true,
-  }, 
+  },
 });
 
 const data = ref(props.tableData);
