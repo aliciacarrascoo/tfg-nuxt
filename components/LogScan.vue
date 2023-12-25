@@ -9,7 +9,7 @@ const props = defineProps({
   },
 });
 const client = useSupabaseClient();
-const { data } = await useAsyncData("scan", async () => {
+const { data } = await useAsyncData("scans", async () => {
   return await client.from("scans").select("*").eq("result_id", props.id);
 });
 console.log("backend:", data);
@@ -98,8 +98,8 @@ const types = {
     <div>{{ recomendation || notFound }}</div>
     <!------LOG------>
     <div>
-      <strong>Log</strong>
-      <JsonViewer :value="log"></JsonViewer>
+      <strong>Log JSON</strong>
+      <JsonViewer class="mt-1" :value="log" :boxed="true"></JsonViewer>
     </div>
   </div>
 </template>

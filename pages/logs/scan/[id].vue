@@ -6,5 +6,6 @@ console.log(route.params);
 <template>
   <Page title="Scan Results">
     <LogScan :id="route.params.id" />
+    <CommentSection table="scans"/>
   </Page>
 </template>
