@@ -42,7 +42,7 @@
                 <button
                   type="button"
                   class="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                  @click="closeModal"
+                  @click="sendEmail"
                 >
                   Send email!
                 </button>
@@ -73,6 +73,7 @@
         default: () => {}
       }
     });
+    const loadingStore = useLoadingStore();
     const email = ref('');
     function closeModal() {
       props.setIsOpen(false);
@@ -80,5 +81,13 @@
 
     function openModal() {
       props.setIsOpen(true);
+    }
+
+    async function sendEmail() {
+      loadingStore.setLoading(true)
+      const result = await $fetch('api/send', { method: 'POST', body: { email: email.value} })
+      loadingStore.setLoading(false)
+      closeModal();
+      console.error(result)
     }
   </script>

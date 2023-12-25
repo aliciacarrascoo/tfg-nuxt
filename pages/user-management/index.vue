@@ -31,11 +31,9 @@ type User = {
   role: Role;
   last_signed_in: string;
 };
-
 const columnHelper = createColumnHelper<User>();
 
 const onChangeRoleClick = async (userId: string, role: Role) => {
-  console.log('hola', userId, role)
   await client
     .from("profiles")
     .update({role: role})
@@ -45,7 +43,7 @@ const onChangeRoleClick = async (userId: string, role: Role) => {
 const columns = [
   columnHelper.accessor("full_name", {
     header: () => "full name",
-    cell: (info) => info.getValue(),
+    cell: (info) => currentUserProfile.value.id === info.row.original.id? `${info.getValue()} (You)`: info.getValue() ,
     footer: (props) => props.column.id,
   }),
   columnHelper.accessor("email", {
@@ -80,6 +78,7 @@ const columns = [
     footer: (props) => props.column.id,
   }),
 ];
+
 </script>
 
 <template>
