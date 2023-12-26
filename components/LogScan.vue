@@ -61,21 +61,38 @@ const types = {
       </h4>
       <span :class="types[severity].class">{{ types[severity].label }}</span>
     </div>
-    <!------SHA256------>
+     <!------SHA256------>
     <div>
       <strong>SHA256</strong>
     </div>
-    <div>{{ sha256 || notFound }}</div>
+    <div class="flex align-center">
+      <div>{{ sha256 || notFound }}</div>
+      <div>
+        <Button button-type="text">
+          <a :href="'https://www.virustotal.com/gui/file/' + (sha256)" target="_blank"> >> Check VirusTotal</a>
+        </Button>
+      </div> 
+    </div> 
     <!------MITRE TACTIC------>
     <div>
       <strong>Mitre tactic</strong>
     </div>
-    <div>{{ mitre_tactic || notFound }}</div>
+    <div class="flex align-center">
+      <div>{{ mitre_tactic || notFound }}</div>
+      <Button button-type="text">
+        <a :href="'https://attack.mitre.org/tactics/' + (mitre_tactic)" target="_blank">>> Check Tactic</a>
+      </Button>
+    </div>
     <!------MITRE TECHNIQUE------>
     <div>
       <strong>Mitre technique</strong>
     </div>
-    <div>{{ mitre_technique || notFound }}</div>
+    <div class="flex align-center">
+      <div>{{ mitre_technique || notFound }}</div>
+      <Button button-type="text">
+        <a :href="'https://attack.mitre.org/techniques/' + (mitre_technique)" target="_blank">>> Check Technique</a>
+      </Button>
+    </div>
     <!------ALERT------>
     <div>
       <strong>Alert</strong>
