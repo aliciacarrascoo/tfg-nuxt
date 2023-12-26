@@ -1,29 +1,22 @@
 <script setup lang="ts">
 import {
-  FlexRender,
-  getCoreRowModel,
-  useVueTable,
   createColumnHelper,
 } from "@tanstack/vue-table";
+
 import type { Role } from "../../types";
 
 const modalIsOpen = ref(false);
 function setModalIsOpen(value: boolean) {
     modalIsOpen.value = value
 }
-const user = useSupabaseUser()
 const client = useSupabaseClient();
 const { data: profiles } = await useAsyncData("profiles", async () => {
   const { data } = await client.from("profiles").select("*");
   return data;
 });
 
-const { data: currentUserProfile } = await useAsyncData("currentProfile", async () => {
-    if (!user.value) return null;
-  const { data } = await client.from("profiles").select("*").eq("id", user.value.id);
-  return data![0];
-});
-    console.log(currentUserProfile.value)
+const currentUserProfile = await useCurrentUserProfile()
+  
 type User = {
   id: string;
   full_name: string;
@@ -36,7 +29,7 @@ const columnHelper = createColumnHelper<User>();
 const onChangeRoleClick = async (userId: string, role: Role) => {
   await client
     .from("profiles")
-    .update({role: role})
+    .update(role)
     .eq("id", userId);
 };
 
