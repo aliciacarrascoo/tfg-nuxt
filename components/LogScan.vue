@@ -17,7 +17,9 @@ const {
   sha256,
   created,
   mitre_tactic,
+  mitre_tactic_id_and_name,
   mitre_technique,
+  mitre_technique_id_and_name,
   severity,
   alert,
   alert_description,
@@ -66,7 +68,7 @@ const types = {
       <strong>SHA256</strong>
     </div>
     <div class="flex align-center">
-      <div>{{ sha256 || notFound }}</div>
+      <div>{{ sha256 || notFound }} &nbsp;</div>
       <div>
         <Button button-type="text">
           <a
@@ -83,7 +85,7 @@ const types = {
       <strong>Mitre tactic</strong>
     </div>
     <div class="flex align-center">
-      <div>{{ mitre_tactic || notFound }}</div>
+      <div>{{ mitre_tactic_id_and_name || mitre_tactic || notFound }} &nbsp;</div>
       <Button button-type="text">
         <a
           :href="'https://attack.mitre.org/tactics/' + mitre_tactic"
@@ -97,7 +99,7 @@ const types = {
       <strong>Mitre technique</strong>
     </div>
     <div class="flex align-center">
-      <div>{{ mitre_technique || notFound }}</div>
+      <div>{{ mitre_technique_id_and_name || mitre_technique || notFound }} &nbsp;</div>
       <Button button-type="text">
         <a
           :href="'https://attack.mitre.org/techniques/' + mitre_technique"

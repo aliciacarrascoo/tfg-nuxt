@@ -106,7 +106,7 @@ const logout = async () => {
                   @click="logout"
                   class="block py-2 pl-3 pr-2"
                 >
-                  {{ $t("Logout") }}
+                  {{ $t("logout") }}
                 </Button>
                 <span class="text-gray-600">
                   {{ `(${user.email})` }}

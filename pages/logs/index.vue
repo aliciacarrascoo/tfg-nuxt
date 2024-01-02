@@ -28,12 +28,16 @@ async function analizeLogs() {
       logsObject["Mittre tactic"] ||
       logsObject["Mittre Tactic"] ||
       logsObject["mitretactic"],
+    mitre_tactic_id_and_name:
+      logsObject["mitre_tactic_id_and_name"],
     mitre_technique:
       logsObject["mitre_technique_ids"] ||
       logsObject["mittre technique"] ||
       logsObject["Mittre technique"] ||
       logsObject["Mittre Technique"] ||
       logsObject["mitretechnique"],
+    mitre_technique_id_and_name:
+      logsObject["mitre_technique_id_and_name"],
     severity:
       logsObject["severity"] ||
       logsObject["Severity"] ||
