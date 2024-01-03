@@ -46,7 +46,7 @@ async function onLoginClick(provider) {
                 <label
                   for="email"
                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >{{$t("login.yourEmail")}}</label
+                  >EMAIL</label
                 >
                 <input
                   type="email"
@@ -123,10 +123,10 @@ async function onLoginClick(provider) {
               </button>
               <p class="text-sm font-light text-gray-500 dark:text-gray-400">
                 {{ $t("login.dontHaveAnAccountYet") }}
-                <NuxtLink
-                  to="/signup"
+                <a
+                  href="#"
                   class="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                  >{{ $t("login.signUp") }}</NuxtLink
+                  > {{ $t("login.signUp") }}</a
                 >
               </p>
             </form>

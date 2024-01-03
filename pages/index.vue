@@ -5,7 +5,7 @@
   }
 </script>
 <template>
-  <Page title="Home page">
+  <Page title="home">
     <Button @click="()=>sendMail()">Enviar mail</Button>
   </Page>
 

@@ -8,7 +8,7 @@ export default function (property) {
       id: "es",
       name: "Español",
     },
-    ca: {
+    cat: {
       id: "cat",
       name: "Català",
     },
