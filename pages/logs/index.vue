@@ -1,7 +1,8 @@
-<script setup>
-const logs = ref("");
+<script setup lang='ts'>
+  import { createColumnHelper } from "@tanstack/vue-table";
+const logs = ref();
 const fileInput = ref(null);
-
+const client = useSupabaseClient();
 const loadingStore = useLoadingStore();
 
 async function fileChange() {
@@ -67,10 +68,40 @@ async function analizeLogs() {
   loadingStore.setLoading(false);
   navigateTo(`/logs/scan/${data[0].result_id}`);
 }
+const logsBackend = ref(undefined)
+onMounted(async ()=>{
+const { data } = await client.from("scans").select("result_id, severity")
+logsBackend.value = data;
+})
+
+type Log = {
+  result_id: string;
+  severity: string;
+};
+
+const columnHelper = createColumnHelper<Log>();
+const columns = [
+  columnHelper.accessor("result_id", {
+    header: () => "id",
+    footer: (props) => props.column.id,
+  }),
+  columnHelper.accessor("severity", {
+    header: () => "severity",
+    footer: (props) => props.column.id,
+  })
+];
 </script>
 
 <template>
   <Page title="newLog.scanANewLog">
+    <Button
+        styles="bg-green-700 hover:bg-green-900 px-2 py-1.7 text-xs"
+      >
+        <NuxtLink to="/scan">Scan new log</NuxtLink>
+    </Button>
+    <div v-if="!!logsBackend">
+      <Table :columns='columns' :tableData='logsBackend'/>
+    </div>
     <h4 class="mb-2">{{ $t("newLog.introduceYourCortexLogs") }}</h4>
     <textarea
       class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
