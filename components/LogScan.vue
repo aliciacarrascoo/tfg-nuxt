@@ -12,7 +12,7 @@ const client = useSupabaseClient();
 const { data } = await useAsyncData("scans", async () => {
   return await client.from("scans").select("*").eq("result_id", props.id);
 });
-console.log("backend:", data);
+console.log(data, "scan");
 const {
   sha256,
   created,
@@ -63,7 +63,7 @@ const types = {
       </h4>
       <span :class="types[severity].class">{{ types[severity].label }}</span>
     </div>
-     <!------SHA256------>
+    <!------SHA256------>
     <div>
       <strong>SHA256</strong>
     </div>
@@ -71,10 +71,15 @@ const types = {
       <div>{{ sha256 || notFound }} &nbsp;</div>
       <div>
         <Button button-type="text">
-          <a :href="'https://www.virustotal.com/gui/file/' + (sha256)" target="_blank"> >> Check VirusTotal</a>
+          <a
+            :href="'https://www.virustotal.com/gui/file/' + sha256"
+            target="_blank"
+          >
+            >> Check VirusTotal</a
+          >
         </Button>
-      </div> 
-    </div> 
+      </div>
+    </div>
     <!------MITRE TACTIC------>
     <div>
       <strong>Mitre tactic</strong>
@@ -82,7 +87,11 @@ const types = {
     <div class="flex align-center">
       <div>{{ mitre_tactic_id_and_name || mitre_tactic || notFound }} &nbsp;</div>
       <Button button-type="text">
-        <a :href="'https://attack.mitre.org/tactics/' + (mitre_tactic)" target="_blank">>> Check Tactic</a>
+        <a
+          :href="'https://attack.mitre.org/tactics/' + mitre_tactic"
+          target="_blank"
+          >>> Check Tactic</a
+        >
       </Button>
     </div>
     <!------MITRE TECHNIQUE------>
@@ -92,7 +101,11 @@ const types = {
     <div class="flex align-center">
       <div>{{ mitre_technique_id_and_name || mitre_technique || notFound }} &nbsp;</div>
       <Button button-type="text">
-        <a :href="'https://attack.mitre.org/techniques/' + (mitre_technique)" target="_blank">>> Check Technique</a>
+        <a
+          :href="'https://attack.mitre.org/techniques/' + mitre_technique"
+          target="_blank"
+          >>> Check Technique</a
+        >
       </Button>
     </div>
     <!------ALERT------>
