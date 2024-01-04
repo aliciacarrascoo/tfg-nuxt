@@ -3,6 +3,7 @@ const logs = ref();
 const fileInput = ref(null);
 const client = useSupabaseClient();
 const loadingStore = useLoadingStore();
+const currentUserProfile = await useCurrentUserProfile(); 
 
 async function fileChange() {
   const file = fileInput.value?.files[0];
@@ -59,6 +60,7 @@ async function analizeLogs() {
       logsObject["Recomendation"] ||
       logsObject["RECOMENDATION"],
     user: user.value.id,
+    profile_id: currentUserProfile.value.id,
     log: logsObject,
   };
   const { data, error } = await client.from("scans").insert(body).select();

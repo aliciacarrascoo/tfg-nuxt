@@ -17,7 +17,7 @@
         </p>
         <p class="text-sm text-gray-600 dark:text-gray-400">
           <time pubdate datetime="2022-02-08" title="February 8th, 2022">
-            {{ getDate(props.comment?.created_at) }}
+            {{ formatDate(props.comment?.created_at) }}
           </time>
         </p>
       </div>
@@ -117,13 +117,6 @@ const props = defineProps({
 });
 const showForm = ref(false);
 const menuIsOpen = ref(false);
-const getDate = (date) => {
-  if (!date) return "";
-  console.log(
-    new Date(props.comment.created_at).toLocaleString().replace(",", ""),
-  );
-  return new Date(date).toLocaleString().replace(",", " at ");
-};
 const client = useSupabaseClient();
 const { data } = await useAsyncData("nose", async () => {
   const { data } = await client
