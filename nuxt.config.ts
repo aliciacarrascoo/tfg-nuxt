@@ -17,6 +17,12 @@ export default defineNuxtConfig({
   imports: {
     dirs: ["stores"],
   },
+  supabase: {
+    redirectOptions: {
+      login: '/login',
+      exclude: ['/signup'],
+    },
+  },
   runtimeConfig: {
     public: {
       redirectUrl: "",
