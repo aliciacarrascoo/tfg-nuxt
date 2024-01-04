@@ -3,6 +3,8 @@ import { watchEffect } from "vue";
 const config = useRuntimeConfig();
 const supabase = useSupabaseClient();
 const user = useSupabaseUser();
+const email = ref(undefined);
+const password = ref(undefined);
 
 watchEffect(() => {
   if (user.value) {
@@ -10,7 +12,15 @@ watchEffect(() => {
   }
 });
 console.log("login redirect url: ", config.public.redirectUrl);
-async function onLoginClick(provider) {
+
+async function onLoginClicked(){
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: email.value,
+    password: password.value 
+  })
+}
+
+async function onLoginOAuthClicked(provider) {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider,
     options: {
@@ -49,6 +59,7 @@ async function onLoginClick(provider) {
                   >{{$t("login.yourEmail")}}</label
                 >
                 <input
+                  v-model="email"
                   type="email"
                   name="email"
                   id="email"
@@ -64,6 +75,7 @@ async function onLoginClick(provider) {
                   >{{$t("login.password")}}</label
                 >
                 <input
+                  v-model="password"
                   type="password"
                   name="password"
                   id="password"
@@ -98,14 +110,14 @@ async function onLoginClick(provider) {
                 >
               </div>
               <button
-                type="submit"
+                @click="onLoginClicked"
                 class="w-full text-white bg-blue-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
               >
               {{ $t("login.signIn") }}
               </button>
               <button
                 class="text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-20 py-2.5 text-center inline-flex items-center justify-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 mb-2"
-                @click="() => onLoginClick('github')"
+                @click="() => onLoginOAuthClicked('github')"
               >
                 <div class="flex items-center">
                   <Icon name="uil:github" class="mr-2" />
@@ -114,7 +126,7 @@ async function onLoginClick(provider) {
               </button>
               <button
                 class="text-black bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-20 py-2.5 text-center inline-flex items-center justify-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 mb-2"
-                @click="() => onLoginClick('google')"
+                @click="() => onLoginOAuthClicked('google')"
               >
                 <div class="flex items-center">
                   <Icon name="logos:google-icon" class="mr-2" />
