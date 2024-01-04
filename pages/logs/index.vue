@@ -42,14 +42,12 @@ const columns = [
   }),
 
 ];
-console.log(logsBackend)
 </script>
 
 <template>
   <Page title="Logs">
     <div class="flex justify-end">
-    <Button
-      >
+    <Button class="mb-2">
         <NuxtLink to="/logs/scan">Scan new log</NuxtLink>
     </Button>
     </div>
