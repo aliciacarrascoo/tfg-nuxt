@@ -42,6 +42,10 @@ const columns = [
   }),
 
 ];
+
+const onRowClicked = (row) => {
+  navigateTo(`/logs/scan/${row.original.result_id}`);
+}
 </script>
 
 <template>
@@ -52,9 +56,8 @@ const columns = [
     </Button>
     </div>
     <div v-if="!!logsBackend">
-      <Table :columns='columns' :tableData='logsBackend'/>
+      <Table :columns='columns' :tableData='logsBackend' :onRowClicked='onRowClicked'/>
     </div>
-    
   </Page>
 </template>
 

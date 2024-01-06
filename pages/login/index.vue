@@ -5,13 +5,13 @@ const supabase = useSupabaseClient();
 const user = useSupabaseUser();
 const email = ref(undefined);
 const password = ref(undefined);
+const runtimeConfig = useRuntimeConfig();
 
 watchEffect(() => {
   if (user.value) {
     navigateTo("/");
   }
 });
-console.log("login redirect url: ", config.public.redirectUrl);
 
 async function onLoginClicked(){
   const { data, error } = await supabase.auth.signInWithPassword({
@@ -20,11 +20,21 @@ async function onLoginClicked(){
   })
 }
 
-async function onLoginOAuthClicked(provider) {
+const getURL = (runtimeConfig) => {
+console.log(runtimeConfig.public)
+  let url =
+    runtimeConfig.public.NEXT_PUBLIC_SITE_URL || // Set this to your site URL in production env.
+    runtimeConfig.public.NEXT_PUBLIC_VERCEL_URL ||// Automatically set by Vercel.
+    'http://localhost:3000/confirm'
+  // Make sure to include `https://` when not localhost.
+  url = url.includes('http') ? url : `https://${url}`
+  return url
+}
+async function onLoginOAuthClicked(provider, runtimeConfig) {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider,
     options: {
-      redirectTo: config.public.redirectUrl,
+      redirectTo: getURL(runtimeConfig)
     },
   });
   console.error(data);
@@ -117,7 +127,7 @@ async function onLoginOAuthClicked(provider) {
               </button>
               <button
                 class="text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-20 py-2.5 text-center inline-flex items-center justify-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 mb-2"
-                @click="() => onLoginOAuthClicked('github')"
+                @click="() => onLoginOAuthClicked('github', runtimeConfig)"
               >
                 <div class="flex items-center">
                   <Icon name="uil:github" class="mr-2" />
@@ -126,7 +136,7 @@ async function onLoginOAuthClicked(provider) {
               </button>
               <button
                 class="text-black bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-20 py-2.5 text-center inline-flex items-center justify-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 mb-2"
-                @click="() => onLoginOAuthClicked('google')"
+                @click="() => onLoginOAuthClicked('google', runtimeConfig)"
               >
                 <div class="flex items-center">
                   <Icon name="logos:google-icon" class="mr-2" />

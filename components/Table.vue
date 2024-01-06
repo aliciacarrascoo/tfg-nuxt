@@ -10,6 +10,9 @@ const props = defineProps({
     type: Array<any>,
     required: true,
   },
+  onRowClicked: {
+    type: Function,
+    required: false,}
 });
 
 const data = ref(props.tableData);
@@ -21,6 +24,7 @@ const table = useVueTable({
   columns: props.columns,
   getCoreRowModel: getCoreRowModel(),
 });
+
 </script>
 
 <template>
@@ -53,7 +57,9 @@ const table = useVueTable({
       </thead>
       <tbody>
         <tr
+          @click="(e) => props.onRowClicked(row)"
           class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
+          :class="onRowClicked ? 'cursor-pointer' : 'cursor-default'"
           v-for="row in table.getRowModel().rows"
           :key="row.id"
         >
