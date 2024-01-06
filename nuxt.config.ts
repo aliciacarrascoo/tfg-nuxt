@@ -25,7 +25,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      redirectUrl: "",
+      redirectUrl: process.env.NUXT_PUBLIC_REDIRECT_URL,
     },
   },
 });
