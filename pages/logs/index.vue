@@ -1,77 +1,60 @@
-<script setup>
+<script setup lang='ts'>
+  import { createColumnHelper } from "@tanstack/vue-table";
+const client = useSupabaseClient();
 
-const logs = ref("");
-const fileInput = ref(null);
+const logsBackend = ref(undefined)
+onMounted(async ()=>{
+const { data } = await client.from("scans").select("result_id, severity, alert, created, profile_id, profiles(full_name)")
+  logsBackend.value = data;
+})
 
-const loadingStore = useLoadingStore();
+type Log = {
+  result_id: string;
+  severity: string;
+  alert: string;
+  created: string;
+  user_full_name: string;
+};
 
-async function fileChange() {
-  const file = fileInput.value?.files[0];
-  if (file) {
-    logs.value = await file.text();
-  }
-}
+const columnHelper = createColumnHelper<Log>();
+const columns = [
+  columnHelper.accessor("result_id", {
+    header: () => "id",
+    footer: (props) => props.column.id,
+  }),
+  columnHelper.accessor("severity", {
+    header: () => "severity",
+    footer: (props) => props.column.id,
+  }),
+    columnHelper.accessor("alert", {
+    header: () => "alert",
+    footer: (props) => props.column.id,
+  }),
+    columnHelper.accessor("created", {
+    header: () => "created",
+    cell: (info) => formatDate(info.getValue()),
+    footer: (props) => props.column.id, 
+  }),
+    columnHelper.accessor("profiles",{
+    header: () => "Scanned by",
+    cell: (info) => info.getValue()?.full_name,
+    footer: (props) => props.column.id, 
+  }),
 
-async function analizeLogs() {
-  loadingStore.setLoading(true);
-  const client = useSupabaseClient();
-  const user = useSupabaseUser();
-  let logsObject = JSON.parse(logs.value);
-  logsObject = logsObject['original_alert_json'] || logsObject
-  const body = {
-      sha256: logsObject['raw_abioc']?.['event']?.['causality_actor_process_image_sha256'] || logsObject['SHA256'],
-      mitre_attack: logsObject['mitre_attack'] || logsObject['mittre attack'] || logsObject['Mittre attack'] || logsObject['Mittre Attack'] || logsObject['mitreAttack'],
-      severity: logsObject['severity'] || logsObject['Severity'] || logsObject['SEVERITY'],
-      alert_description: logsObject['alert_description'] || logsObject['Alert description'] || logsObject['Alert Description'] || logsObject['alertDescription'],
-      context: logsObject['context'] || logsObject['Context'] || logsObject['CONTEXT'],
-      recomendation: logsObject['recomendation'] || logsObject['Recomendation'] || logsObject['RECOMENDATION'],
-      alert: logsObject['alert'] || logsObject['alert'] || logsObject['ALERT'],
-    user: user.value.id,
-      log: logsObject,
-  } 
-  const { data, error } = await client
-    .from("scans")
-    .insert(body)
-    .select();
-
-  console.log(data, "data")
-  loadingStore.setLoading(false);
-  navigateTo(`/logs/scan/${data[0].result_id}`);
-}
+];
 </script>
 
 <template>
-  <Page title="Scan new logs">
-    <h4 class="mb-2">Introduce cortex logs</h4>
-    <textarea
-      class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-      v-model="logs"
-      rows="15"
-      placeholder="Logs as JSON"
-    />
-    <div class="w-100 my-4">
-      <div class="mb-2">Or import from file</div>
-      <input
-        ref="fileInput"
-        type="file"
-        class="form-control-file"
-        accept=".json"
-        @change="fileChange"
-      />
-    </div>
-    <Button @click="analizeLogs" buttonType="text">
-      <div class="flex items-center">
-        <span>
-          {{ $t("analizeLogs") }}
-        </span>
-        <Icon name="ic:round-arrow-forward-ios" class="ml-2" />
-      </div>
+  <Page title="Logs">
+    <div class="flex justify-end">
+    <Button class="mb-2">
+        <NuxtLink to="/logs/scan">Scan new log</NuxtLink>
     </Button>
-    <div id="json-result">
-
     </div>
+    <div v-if="!!logsBackend">
+      <Table :columns='columns' :tableData='logsBackend'/>
+    </div>
+    
   </Page>
 </template>
-
-
 
