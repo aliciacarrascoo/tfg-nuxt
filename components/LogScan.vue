@@ -1,6 +1,6 @@
 <script setup>
-import JsonViewer from 'vue-json-viewer/ssr'
-import 'vue-json-viewer/style.css'
+import JsonViewer from "vue-json-viewer/ssr";
+import "vue-json-viewer/style.css";
 
 const props = defineProps({
   id: {
@@ -9,39 +9,39 @@ const props = defineProps({
   },
 });
 const client = useSupabaseClient();
-const { data } = await useAsyncData("scan", async () => {
-  return await client
-    .from("scans")
-    .select('*')
-    .eq("result_id", props.id);
+const { data } = await useAsyncData("scans", async () => {
+  return await client.from("scans").select("*").eq("result_id", props.id);
 });
-console.log("backend:", data);
+console.log(data, "scan");
 const {
   sha256,
   created,
-  mitre_attack,
+  mitre_tactic,
+  mitre_tactic_id_and_name,
+  mitre_technique,
+  mitre_technique_id_and_name,
   severity,
   alert,
   alert_description,
   context,
   recomendation,
-  log
+  log,
 } = data._rawValue.data[0];
 
 const notFound = "Not found";
 
 const types = {
-  "SEV_030_LOW": {
+  SEV_030_LOW: {
     label: "Low severity",
     class:
       "h-5 bg-indigo-100 text-indigo-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-indigo-900 dark:text-indigo-300",
   },
-  "SEV_030_MEDIUM": {
+  SEV_030_MEDIUM: {
     label: "Medium severity",
     class:
       "h-5 bg-yellow-100 text-yellow-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-yellow-900 dark:text-yellow-300",
   },
-  "SEV_030_HIGH": {
+  SEV_030_HIGH: {
     label: "High severity",
     class:
       "h-5 bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300",
@@ -51,41 +51,87 @@ const types = {
 
 <template>
   <div class="text-gray-500 mb-1">Scanned on: {{ created }}</div>
-  <div class="block p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+  <div
+    class="block p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+  >
     <div class="flex justify-between align-center">
-      <h4 class="flex items-center text-4xl font-semibold dark:text-white mb-5">Summary<span class="bg-blue-100 text-blue-800 font-semibold text-lg px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-2">ID: {{ id }}</span></h4>
+      <h4 class="flex items-center text-4xl font-semibold dark:text-white mb-5">
+        Summary<span
+          class="bg-blue-100 text-blue-800 font-semibold text-lg px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-2"
+          >ID: {{ id }}</span
+        >
+      </h4>
       <span :class="types[severity].class">{{ types[severity].label }}</span>
     </div>
-    <!------MITRE ATT&CK------>
+    <!------SHA256------>
     <div>
-      <strong>Mitre attack</strong>
+      <strong>SHA256</strong>
     </div>
-    <div>{{ mitre_attack || notFound }}</div>
+    <div class="flex align-center">
+      <div>{{ sha256 || notFound }} &nbsp;</div>
+      <div>
+        <Button button-type="text">
+          <a
+            :href="'https://www.virustotal.com/gui/file/' + sha256"
+            target="_blank"
+          >
+            >> Check VirusTotal</a
+          >
+        </Button>
+      </div>
+    </div>
+    <!------MITRE TACTIC------>
+    <div>
+      <strong>Mitre tactic</strong>
+    </div>
+    <div class="flex align-center">
+      <div>{{ mitre_tactic_id_and_name || mitre_tactic || notFound }} &nbsp;</div>
+      <Button button-type="text">
+        <a
+          :href="'https://attack.mitre.org/tactics/' + mitre_tactic"
+          target="_blank"
+          >>> Check Tactic</a
+        >
+      </Button>
+    </div>
+    <!------MITRE TECHNIQUE------>
+    <div>
+      <strong>Mitre technique</strong>
+    </div>
+    <div class="flex align-center">
+      <div>{{ mitre_technique_id_and_name || mitre_technique || notFound }} &nbsp;</div>
+      <Button button-type="text">
+        <a
+          :href="'https://attack.mitre.org/techniques/' + mitre_technique"
+          target="_blank"
+          >>> Check Technique</a
+        >
+      </Button>
+    </div>
     <!------ALERT------>
     <div>
       <strong>Alert</strong>
     </div>
-    <div>{{ alert|| notFound }}</div>
+    <div>{{ alert || notFound }}</div>
     <!------Alert description------>
     <div>
       <strong>Alert description</strong>
     </div>
-    <div class="overflow-hidden">{{ alert_description || notFound}}</div>
+    <div class="overflow-hidden">{{ alert_description || notFound }}</div>
     <!------CONTEXT------>
     <div>
       <strong>Context</strong>
     </div>
-    <div>{{ context || notFound}}</div>
+    <div>{{ context || notFound }}</div>
     <!------RECOMENDATION------>
     <div>
       <strong>Recomendation</strong>
     </div>
-    <div>{{ recomendation || notFound}}</div>
+    <div>{{ recomendation || notFound }}</div>
     <!------LOG------>
     <div>
-      <strong>Log</strong>
-      <JsonViewer :value="log"></JsonViewer>
+      <strong>Log JSON</strong>
+      <JsonViewer class="mt-1" :value="log" :boxed="true"></JsonViewer>
     </div>
-    </div>
-  </template>
- 
+  </div>
+</template>

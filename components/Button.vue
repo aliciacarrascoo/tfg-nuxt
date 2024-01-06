@@ -4,6 +4,10 @@ const props = defineProps({
     type: String,
     default: "default",
   },
+  styles: {
+    type: String,
+    default: "",
+  },
 });
 const buttonClasses = {
   default:
@@ -13,7 +17,7 @@ const buttonClasses = {
 </script>
 
 <template>
-  <button :class="buttonClasses[buttonType]">
+  <button :class="buttonClasses[buttonType] + ' ' + styles">
     <slot />
   </button>
 </template>

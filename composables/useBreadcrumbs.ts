@@ -1,5 +1,3 @@
-/** @format */
-
 const isMathPatternPath = (pathA: string, pathB: string) => {
   const partsA = pathA.split("/");
   const partsB = pathB.split("/");

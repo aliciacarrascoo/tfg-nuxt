@@ -4,6 +4,8 @@ const user = useSupabaseUser();
 const mobileMenuIsOpen = ref(false);
 const loadingStore = useLoadingStore();
 const { isLoading } = storeToRefs(loadingStore);
+const colorMode = useColorMode();
+colorMode.preference = "light";
 
 const logout = async () => {
   await client.auth.signOut();
@@ -24,7 +26,7 @@ const logout = async () => {
               >{{ getConfig("siteName") }}
             </span>
           </NuxtLink>
-          <div class="flex items-center lg:order-2 flex lg:hidden">
+          <div class="flex items-center lg:order-2 klg:hidden">
             <button
               @click="mobileMenuIsOpen = !mobileMenuIsOpen"
               type="button"
@@ -72,23 +74,9 @@ const logout = async () => {
               </li>
               <li>
                 <NuxtLink
-                  to="/resources"
+                  to="/user-management"
                   class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:hover:text-blue-700 lg:p-0 dark:text-white lg:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
-                  >Recursos</NuxtLink
-                >
-              </li>
-              <li>
-                <NuxtLink
-                  to="/databases"
-                  class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:hover:text-blue-700 lg:p-0 dark:text-white lg:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
-                  >Databases</NuxtLink
-                >
-              </li>
-              <li>
-                <NuxtLink
-                  to="/blog"
-                  class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:hover:text-blue-700 lg:p-0 dark:text-white lg:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
-                  >Blog</NuxtLink
+                  >User management</NuxtLink
                 >
               </li>
               <li v-if="user" class="flex items-center">
@@ -97,11 +85,14 @@ const logout = async () => {
                   @click="logout"
                   class="block py-2 pl-3 pr-2"
                 >
-                  {{ $t("Logout") }}
+                  {{ $t("logout") }}
                 </Button>
                 <span class="text-gray-600">
                   {{ `(${user.email})` }}
                 </span>
+              </li>
+              <li>
+                <LanguageSelector />
               </li>
             </ul>
           </div>
