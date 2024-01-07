@@ -23,11 +23,19 @@ async function analizeLogs() {
       logsObject["raw_abioc"]?.["event"]?.[
         "causality_actor_process_image_sha256"
       ] || logsObject["SHA256"],
+    hostname:
+      logsObject["raw_abioc"]?.["event"]?.[
+        "agent_hostname"],
+    user_detected:
+      logsObject["raw_abioc"]?.["event"]?.[
+        "actor_primary_username"],
+    alert_category:
+      logsObject["alert_category"],
     mitre_tactic:
       logsObject["mitre_tactic_ids"] ||
-      logsObject["mittre tactic"] ||
-      logsObject["Mittre tactic"] ||
-      logsObject["Mittre Tactic"] ||
+      logsObject["mitre tactic"] ||
+      logsObject["Mitre tactic"] ||
+      logsObject["Mitre Tactic"] ||
       logsObject["mitretactic"],
     mitre_tactic_id_and_name:
       logsObject["mitre_tactic_id_and_name"],
