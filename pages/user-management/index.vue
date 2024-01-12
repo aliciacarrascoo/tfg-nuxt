@@ -69,7 +69,6 @@ const columns = [
     footer: (props) => props.column.id,
   }),
 ];
-console.log(currentUserProfile)
 </script>
 
 <template>
