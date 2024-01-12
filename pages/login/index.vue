@@ -1,11 +1,11 @@
 <script setup>
 import { watchEffect } from "vue";
+
 const config = useRuntimeConfig();
 const supabase = useSupabaseClient();
 const user = useSupabaseUser();
 const email = ref(undefined);
 const password = ref(undefined);
-const runtimeConfig = useRuntimeConfig();
 
 watchEffect(() => {
   if (user.value) {
@@ -20,24 +20,14 @@ async function onLoginClicked(){
   })
 }
 
-const getURL = (runtimeConfig) => {
-console.log(runtimeConfig.public)
-  let url =
-    runtimeConfig.public.NEXT_PUBLIC_SITE_URL || // Set this to your site URL in production env.
-    runtimeConfig.public.NEXT_PUBLIC_VERCEL_URL ||// Automatically set by Vercel.
-    'http://localhost:3000/confirm'
-  // Make sure to include `https://` when not localhost.
-  url = url.includes('http') ? url : `https://${url}`
-  return url
-}
-async function onLoginOAuthClicked(provider, runtimeConfig) {
+
+async function onLoginOAuthClicked(provider) {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider,
     options: {
-      redirectTo: getURL(runtimeConfig)
+      redirectTo: getUrl() + "confirm" 
     },
   });
-  console.error(data);
 }
 </script>
 

@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
       from: "Malware scan <onboarding@resend.dev>",
       to: [body.email],
       subject: "You have been invited to join an organization",
-      html: "<strong>It works!</strong>",
+      html: `<a href='${body.url}'>Click here to join ${body.organization}</a>`,
     });
 
     return data;

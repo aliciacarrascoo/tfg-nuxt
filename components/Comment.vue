@@ -115,6 +115,7 @@ const props = defineProps({
     required: true,
   },
 });
+console.log(props.comment);
 const showForm = ref(false);
 const menuIsOpen = ref(false);
 const client = useSupabaseClient();

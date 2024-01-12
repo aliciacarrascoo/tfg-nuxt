@@ -17,51 +17,59 @@ async function analizeLogs() {
   const client = useSupabaseClient();
   const user = useSupabaseUser();
   let logsObject = JSON.parse(logs.value);
-  logsObject = logsObject["original_alert_json"] || logsObject;
+  const originalAlertLogs = logsObject["original_alert_json"] || logsObject;
   const body = {
     sha256:
-      logsObject["raw_abioc"]?.["event"]?.[
+      originalAlertLogs["raw_abioc"]?.["event"]?.[
         "causality_actor_process_image_sha256"
-      ] || logsObject["SHA256"],
+      ] || originalAlertLogs["SHA256"],
+    hostname:
+      originalAlertLogs["raw_abioc"]?.["event"]?.[
+        "agent_hostname"],
+    user_detected:
+      originalAlertLogs["raw_abioc"]?.["event"]?.[
+        "actor_primary_username"],
+    alert_category:
+      originalAlertLogs["alert_category"],
     mitre_tactic:
-      logsObject["mitre_tactic_ids"] ||
-      logsObject["mittre tactic"] ||
-      logsObject["Mittre tactic"] ||
-      logsObject["Mittre Tactic"] ||
-      logsObject["mitretactic"],
+      originalAlertLogs["mitre_tactic_ids"] ||
+      originalAlertLogs["mittre tactic"] ||
+      originalAlertLogs["Mittre tactic"] ||
+      originalAlertLogs["Mittre Tactic"] ||
+      originalAlertLogs["mitretactic"],
     mitre_tactic_id_and_name:
-      logsObject["mitre_tactic_id_and_name"],
+      originalAlertLogs["mitre_tactic_id_and_name"],
     mitre_technique:
-      logsObject["mitre_technique_ids"] ||
-      logsObject["mittre technique"] ||
-      logsObject["Mittre technique"] ||
-      logsObject["Mittre Technique"] ||
-      logsObject["mitretechnique"],
+      originalAlertLogs["mitre_technique_ids"] ||
+      originalAlertLogs["mittre technique"] ||
+      originalAlertLogs["Mittre technique"] ||
+      originalAlertLogs["Mittre Technique"] ||
+      originalAlertLogs["mitretechnique"],
     mitre_technique_id_and_name:
-      logsObject["mitre_technique_id_and_name"],
+      originalAlertLogs["mitre_technique_id_and_name"],
     severity:
-      logsObject["severity"] ||
-      logsObject["Severity"] ||
-      logsObject["SEVERITY"],
+      logsObject["original_severity"] ||
+      logsObject["ORIGINAL_SEVERITY"]
+     , 
     alert:
-      logsObject["alert_name"] ||
-      logsObject["alert"] ||
-      logsObject["alert"] ||
-      logsObject["ALERT"],
+      originalAlertLogs["alert_name"] ||
+      originalAlertLogs["alert"] ||
+      originalAlertLogs["alert"] ||
+      originalAlertLogs["ALERT"],
     alert_description:
-      logsObject["alert_description"] ||
-      logsObject["Alert description"] ||
-      logsObject["Alert Description"] ||
-      logsObject["alertDescription"],
+      originalAlertLogs["alert_description"] ||
+      originalAlertLogs["Alert description"] ||
+      originalAlertLogs["Alert Description"] ||
+      originalAlertLogs["alertDescription"],
     context:
-      logsObject["context"] || logsObject["Context"] || logsObject["CONTEXT"],
+      originalAlertLogs["context"] || originalAlertLogs["Context"] || originalAlertLogs["CONTEXT"],
     recomendation:
-      logsObject["recomendation"] ||
-      logsObject["Recomendation"] ||
-      logsObject["RECOMENDATION"],
+      originalAlertLogs["recomendation"] ||
+      originalAlertLogs["Recomendation"] ||
+      originalAlertLogs["RECOMENDATION"],
     user: user.value.id,
     profile_id: currentUserProfile.value.id,
-    log: logsObject,
+    log: originalAlertLogs,
   };
   const { data, error } = await client.from("scans").insert(body).select();
 
