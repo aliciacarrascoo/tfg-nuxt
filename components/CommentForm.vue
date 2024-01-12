@@ -43,7 +43,6 @@ const postComment = (currentUserProfile) => async () => {
     parent_id: props.parentId,
     profile_id: currentUserProfile?.value?.id,
   });
-  reloadNuxtApp();
 };
 onMounted(async () => {
   const currentUserProfile = await useCurrentUserProfile();

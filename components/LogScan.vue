@@ -31,7 +31,12 @@ const {
 const notFound = "Not found";
 
 const types = {
-  SEV_030_LOW: {
+  SEV_010_INFORMATIONAL: {
+    label: "Informational",
+    class:
+      "h-5 bg-indigo-100 text-indigo-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-indigo-900 dark:text-indigo-300",
+  },
+  SEV_020_LOW: {
     label: "Low severity",
     class:
       "h-5 bg-indigo-100 text-indigo-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-indigo-900 dark:text-indigo-300",
@@ -41,8 +46,13 @@ const types = {
     class:
       "h-5 bg-yellow-100 text-yellow-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-yellow-900 dark:text-yellow-300",
   },
-  SEV_030_HIGH: {
+  SEV_040_HIGH: {
     label: "High severity",
+    class:
+      "h-5 bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300",
+  },
+  SEV_050_CRITICAL: {
+    label: "Critical severity",
     class:
       "h-5 bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300",
   },
@@ -61,7 +71,7 @@ const types = {
           >ID: {{ id }}</span
         >
       </h4>
-      <span :class="types[severity].class">{{ types[severity].label }}</span>
+          <span :class="types[severity]?.class || types['Informational']">{{ types[severity]?.label || notFound}}</span>
     </div>
     <!------SHA256------>
     <div>

@@ -69,6 +69,7 @@ const columns = [
     footer: (props) => props.column.id,
   }),
 ];
+console.log(currentUserProfile)
 </script>
 
 <template>
@@ -81,7 +82,7 @@ const columns = [
       <Button
         styles="px-2 py-1.7 text-sm"
         buttonType="text"
-        v-if="!currentUserProfile!.organization"
+        v-if="!currentUserProfile!.organization_id"
       >
         Create new company
       </Button>
@@ -89,7 +90,7 @@ const columns = [
         @click="() => setModalIsOpen(true)"
         styles="bg-green-700 hover:bg-green-900 px-2 py-1.7 text-xs"
         v-if="
-          currentUserProfile!.organization &&
+          currentUserProfile!.organization_id &&
           currentUserProfile!.role === 'admin'
         "
       >

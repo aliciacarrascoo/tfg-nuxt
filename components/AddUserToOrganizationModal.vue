@@ -10,7 +10,7 @@
       </button>
     </div>
 
-    <Dialog @close="closeModal" class="relative z-10" :open="props.isOpen">
+    <Dialog @close="closeModal" class="relative z-10" :open="props?.isOpen">
       <div class="fixed inset-0 bg-black/25" />
 
       <div class="fixed inset-0 overflow-y-auto">
@@ -66,8 +66,11 @@ const props = defineProps({
     default: () => {},
   },
 });
+const client = useSupabaseClient();
 const loadingStore = useLoadingStore();
+const currentUserProfile = await useCurrentUserProfile();
 const email = ref("");
+
 function closeModal() {
   props.setIsOpen(false);
 }
@@ -78,12 +81,22 @@ function openModal() {
 
 async function sendEmail() {
   loadingStore.setLoading(true);
-  const result = await $fetch("api/send", {
+  const { data: invitedProfile } = await client.from('profiles').select("*").eq("email", email.value);
+  if (!invitedProfile?.length > 0){
+    console.error('No users found with that email')
+    loadingStore.setLoading(false);
+    return
+  }
+  const { data: createdRequest} = await client.from('organization_join_requests').upsert({
+    profile_id: invitedProfile[0].id,
+    organization_id: currentUserProfile.value.organization_id
+  }).select();
+  const { data: organization } = await client.from('organizations').select().eq('id', currentUserProfile.value.organization_id);
+  await $fetch("/api/send", {
     method: "POST",
-    body: { email: email.value },
+    body: { email: invitedProfile[0].email, organization: organization[0].name, url: getUrl() + `organization/confirmation?id=${createdRequest[0].id}`}
   });
   loadingStore.setLoading(false);
   closeModal();
-  console.error(result);
 }
 </script>
