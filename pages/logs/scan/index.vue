@@ -23,6 +23,14 @@ async function analizeLogs() {
       originalAlertLogs["raw_abioc"]?.["event"]?.[
         "causality_actor_process_image_sha256"
       ] || originalAlertLogs["SHA256"],
+    hostname:
+      originalAlertLogs["raw_abioc"]?.["event"]?.[
+        "agent_hostname"],
+    user_detected:
+      originalAlertLogs["raw_abioc"]?.["event"]?.[
+        "actor_primary_username"],
+    alert_category:
+      originalAlertLogs["alert_category"],
     mitre_tactic:
       originalAlertLogs["mitre_tactic_ids"] ||
       originalAlertLogs["mittre tactic"] ||

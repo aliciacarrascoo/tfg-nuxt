@@ -74,6 +74,13 @@ const logout = async () => {
               </li>
               <li>
                 <NuxtLink
+                  to="/recomendations"
+                  class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:hover:text-blue-700 lg:p-0 dark:text-white lg:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
+                  >Recomendations</NuxtLink
+                >
+              </li>
+              <li>
+                <NuxtLink
                   to="/user-management"
                   class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:hover:text-blue-700 lg:p-0 dark:text-white lg:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
                   >User management</NuxtLink
