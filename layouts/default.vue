@@ -3,7 +3,10 @@ const client = useSupabaseClient();
 const user = useSupabaseUser();
 const mobileMenuIsOpen = ref(false);
 const loadingStore = useLoadingStore();
+const alertStore = useAlertStore();
 const { isLoading } = storeToRefs(loadingStore);
+const { alertQueue } = storeToRefs(alertStore);
+console.log({alertQueue});
 const colorMode = useColorMode();
 colorMode.preference = "light";
 
@@ -115,9 +118,12 @@ const logout = async () => {
         class="bg-blue-600 h-1.5 rounded-full dark:bg-blue-500 custom-transition"
       ></div>
     </div>
-    <div class="flex-1">
-      <slot />
-    </div>
+      <div class="fixed">
+        <Alert :type="appAlert.type" :title="appAlert.title" :text="appAlert.text" v-for="appAlert in alertQueue" />
+      </div>
+      <div class="flex-1">
+        <slot />
+      </div>
   </div>
 </template>
 

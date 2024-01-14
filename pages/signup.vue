@@ -5,6 +5,9 @@ const fullName = ref(undefined);
 const email = ref(undefined);
 const password = ref(undefined);
 const passwordConfirmation = ref(undefined);
+const alertStore = useAlertStore();
+    alertStore.addAlert('lorem ipsum', 'Sign up error', 'danger');
+    alertStore.addAlert('lorem ipsum', 'Sign up error', 'danger');
 
 const signUpNewUser = () => {
   if (password.value !== passwordConfirmation.value) return;
@@ -15,6 +18,9 @@ const signUpNewUser = () => {
       data: { full_name: fullName.value },
     },
   });
+  if (error) {
+    alertStore.addAlert(error.value, 'Sign up error', 'danger');
+  }
 };
 </script>
 <template>
@@ -22,12 +28,6 @@ const signUpNewUser = () => {
     <div
       class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0"
     >
-      <a
-        href="#"
-        class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
-      >
-        Welcome
-      </a>
       <div
         class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
       >
@@ -128,11 +128,10 @@ const signUpNewUser = () => {
           <Button @click="signUpNewUser">Create an account</Button>
           <p class="text-sm font-light text-gray-500 dark:text-gray-400">
             Already have an account?
-            <a
-              href="#"
+            <NuxtLink
+                to="/login"
               class="font-medium text-primary-600 hover:underline dark:text-primary-500"
-              >Login here</a
-            >
+              >Login here</NuxtLink>
           </p>
         </div>
       </div>
