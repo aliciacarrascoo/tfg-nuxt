@@ -17,16 +17,16 @@ export default defineI18nConfig(() => ({
         signInWithGithub: "Sign In with Github",
         signInWithGoogle: "Sign In with Google",
         dontHaveAnAccountYet: "Don’t have an account yet?",
-        signUp: "Sign Up"
+        signUp: "Sign Up",
       },
       newLog: {
         scanANewLog: "Scan a new Log:",
         introduceYourCortexLogs: "Introduce your Cortex Logs",
-        orImportFromFile : "Or import from File",
+        orImportFromFile: "Or import from File",
         chooseFile: "Choose File",
         noFileChosen: "No file chosen",
-        analizeLogs: "Analize Logs"
-      }
+        analizeLogs: "Analize Logs",
+      },
     },
     es: {
       home: "Inicio",
@@ -43,16 +43,16 @@ export default defineI18nConfig(() => ({
         signInWithGithub: "Iniciar Sesión con Github",
         signInWithGoogle: "Iniciar Sesión con Google",
         dontHaveAnAccountYet: "Aún no tienes cuenta?",
-        signUp: "Regístrate"
+        signUp: "Regístrate",
       },
       newLog: {
         scanANewLog: "Escanea un nuevo Log",
         introduceYourCortexLogs: "Introduce tus Logs de Cortex:",
-        orImportFromFile : "O impórtalos de un archivo",
+        orImportFromFile: "O impórtalos de un archivo",
         chooseFile: "Escoger archivo",
         noFileChosen: "Ningún archivo seleccionado",
-        analizeLogs: "Analizar Logs"
-      }
+        analizeLogs: "Analizar Logs",
+      },
     },
     cat: {
       home: "Inici ",
@@ -69,16 +69,16 @@ export default defineI18nConfig(() => ({
         signInWithGithub: "Iniciar Sessió amb Github",
         signInWithGoogle: "Iniciar Sessió amb Google",
         dontHaveAnAccountYet: "Encara no tens compte?",
-        signUp: "Regístra't"
+        signUp: "Regístra't",
       },
       newLog: {
         scanANewLog: "Escaneja un nou Log",
         introduceYourCortexLogs: "Introdueix els teus Logs de Cortex:",
-        orImportFromFile : "O importa'ls d'un arxiu",
+        orImportFromFile: "O importa'ls d'un arxiu",
         chooseFile: "Escollir arxiu",
         noFileChosen: "Cap arxiu seleccionat",
-        analizeLogs: "Analitzar Logs"
-      }
-    }
+        analizeLogs: "Analitzar Logs",
+      },
+    },
   },
 }));

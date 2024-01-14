@@ -7,6 +7,12 @@ const modalIsOpen = ref(false);
 function setModalIsOpen(value: boolean) {
   modalIsOpen.value = value;
 }
+
+const createOrganizationModalIsOpen = ref(false);
+function setCreateOrganizationModalIsOpen(value: boolean) {
+  createOrganizationModalIsOpen.value = value;
+}
+
 const client = useSupabaseClient();
 const { data: profiles } = await useAsyncData("profiles", async () => {
   const { data } = await client.from("profiles").select("*");
@@ -77,8 +83,10 @@ const columns = [
       :isOpen="modalIsOpen"
       :setIsOpen="setModalIsOpen"
     />
+    <NewOrganizationModal :isOpen="createOrganizationModalIsOpen" :setIsOpen="setCreateOrganizationModalIsOpen" />
     <div class="flex justify-end mb-3">
       <Button
+        @click="() => setCreateOrganizationModalIsOpen(true)"
         styles="px-2 py-1.7 text-sm"
         buttonType="text"
         v-if="!currentUserProfile!.organization_id"

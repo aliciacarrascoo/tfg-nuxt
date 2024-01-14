@@ -72,13 +72,15 @@ const types = {
           class="bg-blue-100 text-blue-800 font-semibold text-lg px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-2"
           >ID: {{ id }}
         </span>
-          <span :class="types[severity]?.class || types['Informational']">{{ types[severity]?.label || notFound}}</span>
+        <span :class="types[severity]?.class || types['Informational']">{{
+          types[severity]?.label || notFound
+        }}</span>
       </h4>
       <!------RECOMENDATION------>
-        <div>
-        <Button>See recomendation</Button> 
-        </div>
+      <div>
+        <Button>See recomendation</Button>
       </div>
+    </div>
     <!------SHA256------>
     <div>
       <strong>SHA256</strong>
@@ -116,22 +118,32 @@ const types = {
       <strong>Mitre tactic</strong>
     </div>
     <div class="flex align-center">
-      <div>{{ mitre_tactic_id_and_name || mitre_tactic || notFound }} &nbsp;</div>
-    <Button v-if="mitre_tactic_id_and_name || mitre_tactic" button-type="text">
-    <a
-      :href="'https://attack.mitre.org/tactics/' + mitre_tactic"
-      target="_blank"
-      >>> Check Tactic</a
-    >
-  </Button>
+      <div>
+        {{ mitre_tactic_id_and_name || mitre_tactic || notFound }} &nbsp;
+      </div>
+      <Button
+        v-if="mitre_tactic_id_and_name || mitre_tactic"
+        button-type="text"
+      >
+        <a
+          :href="'https://attack.mitre.org/tactics/' + mitre_tactic"
+          target="_blank"
+          >>> Check Tactic</a
+        >
+      </Button>
     </div>
     <!------MITRE TECHNIQUE------>
     <div>
       <strong>Mitre technique</strong>
     </div>
     <div class="flex align-center">
-      <div>{{ mitre_technique_id_and_name || mitre_technique || notFound }} &nbsp;</div>
-      <Button v-if="mitre_technique_id_and_name || mitre_technique" button-type="text">
+      <div>
+        {{ mitre_technique_id_and_name || mitre_technique || notFound }} &nbsp;
+      </div>
+      <Button
+        v-if="mitre_technique_id_and_name || mitre_technique"
+        button-type="text"
+      >
         <a
           :href="'https://attack.mitre.org/techniques/' + mitre_technique"
           target="_blank"

@@ -1,4 +1,3 @@
 <template>
-    <Page title="Databases"> </Page>
-  </template>
-  
+  <Page title="Databases"> </Page>
+</template>

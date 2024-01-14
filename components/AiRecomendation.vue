@@ -1,3 +1,3 @@
 <script setup>
-  const 
+const
 </script>

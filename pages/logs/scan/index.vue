@@ -1,9 +1,9 @@
-<script setup lang='ts'>
+<script setup lang="ts">
 const logs = ref();
 const fileInput = ref(null);
 const client = useSupabaseClient();
 const loadingStore = useLoadingStore();
-const currentUserProfile = await useCurrentUserProfile(); 
+const currentUserProfile = await useCurrentUserProfile();
 
 async function fileChange() {
   const file = fileInput.value?.files[0];
@@ -23,22 +23,17 @@ async function analizeLogs() {
       originalAlertLogs["raw_abioc"]?.["event"]?.[
         "causality_actor_process_image_sha256"
       ] || originalAlertLogs["SHA256"],
-    hostname:
-      originalAlertLogs["raw_abioc"]?.["event"]?.[
-        "agent_hostname"],
+    hostname: originalAlertLogs["raw_abioc"]?.["event"]?.["agent_hostname"],
     user_detected:
-      originalAlertLogs["raw_abioc"]?.["event"]?.[
-        "actor_primary_username"],
-    alert_category:
-      originalAlertLogs["alert_category"],
+      originalAlertLogs["raw_abioc"]?.["event"]?.["actor_primary_username"],
+    alert_category: originalAlertLogs["alert_category"],
     mitre_tactic:
       originalAlertLogs["mitre_tactic_ids"] ||
       originalAlertLogs["mittre tactic"] ||
       originalAlertLogs["Mittre tactic"] ||
       originalAlertLogs["Mittre Tactic"] ||
       originalAlertLogs["mitretactic"],
-    mitre_tactic_id_and_name:
-      originalAlertLogs["mitre_tactic_id_and_name"],
+    mitre_tactic_id_and_name: originalAlertLogs["mitre_tactic_id_and_name"],
     mitre_technique:
       originalAlertLogs["mitre_technique_ids"] ||
       originalAlertLogs["mittre technique"] ||
@@ -48,9 +43,7 @@ async function analizeLogs() {
     mitre_technique_id_and_name:
       originalAlertLogs["mitre_technique_id_and_name"],
     severity:
-      logsObject["original_severity"] ||
-      logsObject["ORIGINAL_SEVERITY"]
-     , 
+      logsObject["original_severity"] || logsObject["ORIGINAL_SEVERITY"],
     alert:
       originalAlertLogs["alert_name"] ||
       originalAlertLogs["alert"] ||
@@ -62,7 +55,9 @@ async function analizeLogs() {
       originalAlertLogs["Alert Description"] ||
       originalAlertLogs["alertDescription"],
     context:
-      originalAlertLogs["context"] || originalAlertLogs["Context"] || originalAlertLogs["CONTEXT"],
+      originalAlertLogs["context"] ||
+      originalAlertLogs["Context"] ||
+      originalAlertLogs["CONTEXT"],
     recomendation:
       originalAlertLogs["recomendation"] ||
       originalAlertLogs["Recomendation"] ||

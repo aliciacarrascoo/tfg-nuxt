@@ -12,7 +12,8 @@ const props = defineProps({
   },
   onRowClicked: {
     type: Function,
-    required: false,}
+    required: false,
+  },
 });
 
 const data = ref(props.tableData);
@@ -24,13 +25,13 @@ const table = useVueTable({
   columns: props.columns,
   getCoreRowModel: getCoreRowModel(),
 });
-
 </script>
 
 <template>
-  
-  <div class="relative overflow-x-auto shadow-md sm:rounded-lg" v-if="
-    props.tableData">
+  <div
+    class="relative overflow-x-auto shadow-md sm:rounded-lg"
+    v-if="props.tableData"
+  >
     <table
       class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
     >

@@ -1,66 +1,50 @@
 <template>
   <Page :title="'Welcome back ' + currentUserProfile?.full_name" >
   <Card>
-  <VueApexCharts v-if="series && chartOptions" type="bar" height="350" :options="chartOptions" :series="series" />
+    <VueApexCharts v-if="series && chartOptions" type="bar" height="350" :options="chartOptions" :series="series" />
   </Card>
+
   </Page>
 </template>
 
 <script setup>
 import VueApexCharts from 'vue3-apexcharts';
-const currentUserProfile = await useCurrentUserProfile();
-/*
 const client = useSupabaseClient();
+const currentUserProfile = await useCurrentUserProfile();
+
+// -- Start: Horizontal severity chart
+const nBars = 5; 
+const dateRanges = getLastMonths(nBars);
+const dataPerRange = [];
+
+for(let i = 0; i < dateRanges.length- 1; i++) {
+
 const { data, error } = await client
-    .from('scans')
-    .sql(`
-      SELECT
-        DATE_TRUNC('month', created) AS month,
-        COUNT(*) AS count
-      FROM
-        scans
-      WHERE
-        severity = 'SEV_040_HIGH' AND
-        created >= NOW() - INTERVAL '5 months'
-      GROUP BY
-        month
-      ORDER BY
-        month DESC;
-    `);
-console.log(data, error);*/
-const series = ref([
-  {
-    name: 'PRODUCT A',
-    data: [44, 55, 41, 67, 22, 43],
-  },
-  {
-    name: 'PRODUCT B',
-    data: [13, 23, 20, 8, 13, 27],
-  },
-  {
-    name: 'PRODUCT C',
-    data: [11, 17, 15, 15, 21, 14],
-  },
-]);
+    .from("scans")
+    .select()
+    .not('severity', 'is', null)
+    .gte('created', dateRanges[i])
+    .lte('created', dateRanges[i + 1]);
+  dataPerRange.push(data);
+}
+const severities = ['SEV_010_INFORMATIONAL', 'SEV_020_LOW' ,  'SEV_030_MEDIUM',  'SEV_040_HIGH', 'SEV_050_CRITICAL' ];
+const series = ref(severities.map((severity) => {
+ return {
+  name: severity.split("_").pop().toLowerCase(), 
+  data:  dataPerRange.map((range) => {
+          return range.filter((scan) => scan.severity === severity).length;
+  })};
+}));
 const chartOptions = ref({
   chart: {
               type: 'bar',
               height: 350,
               stacked: true,
+              stackType: '100%'
             },
             plotOptions: {
               bar: {
                 horizontal: true,
-                dataLabels: {
-                  total: {
-                    enabled: true,
-                    offsetX: 0,
-                    style: {
-                      fontSize: '13px',
-                      fontWeight: 900
-                    }
-                  }
-                }
               },
             },
             stroke: {
@@ -68,25 +52,15 @@ const chartOptions = ref({
               colors: ['#fff']
             },
             title: {
-              text: 'Fiction Books Sales'
+              text: 'Percentage of severities per month'
             },
             xaxis: {
-              categories: [2008, 2009, 2010, 2011, 2012, 2013, 2014],
-              labels: {
-                formatter: function (val) {
-                  return val + "K"
-                }
-              }
-            },
-            yaxis: {
-              title: {
-                text: undefined
-              },
+              categories: dateRanges.slice(0, -1).map((range) => new Date(range).getUTCMonth() + 1 + "-" + new Date(range).getUTCFullYear()),
             },
             tooltip: {
               y: {
                 formatter: function (val) {
-                  return val + "K"
+                  return val + " Scans"
                 }
               }
             },
@@ -99,4 +73,5 @@ const chartOptions = ref({
               offsetX: 40
             }
 });
+// -- End: Horizontal severity chart
 </script>

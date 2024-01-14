@@ -21,14 +21,14 @@ export default defineNuxtConfig({
   },
   supabase: {
     redirectOptions: {
-      login: '/login',
-      exclude: ['/signup'],
+      login: "/login",
+      exclude: ["/signup"],
     },
   },
   runtimeConfig: {
     public: {
       NEXT_PUBLIC_VERCEL_URL: process.env.NEXT_PUBLIC_VERCEL,
-      NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL
+      NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
     },
   },
 });
