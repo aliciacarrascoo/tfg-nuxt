@@ -54,6 +54,7 @@ const props = defineProps({
 });
 const client = useSupabaseClient();
 const loadingStore = useLoadingStore();
+const alertStore = useAlertStore();
 const currentUserProfile = await useCurrentUserProfile();
 const organization = ref("");
 
@@ -67,13 +68,21 @@ async function createOrganization() {
     name: organization.value,
     profile_id: currentUserProfile?.value?.id,
   }).select();
-  console.log(data);
-  console.error(error);
+  if (error) {
+    alertStore.addTemporaryAlert(error.value, "Error", "danger");
+  loadingStore.setLoading(false);
+    return
+  }
   const { error: errorChangingOrganization } = await client
     .from("profiles")
     .update({ organization_id: data[0].id , role: 'admin'})
     .eq("id", currentUserProfile.value.id);
-  console.error(errorChangingOrganization);
+  if (errorChangingOrganization){
+    alertStore.addTemporaryAlert(errorChangingOrganization.value, "Error", "danger");
+    loadingStore.setLoading(false);
+    return
+  }
+  alertStore.addTemporaryAlert("Created organization correctly", "Success!", "success");
   loadingStore.setLoading(false);
   closeModal();
 }

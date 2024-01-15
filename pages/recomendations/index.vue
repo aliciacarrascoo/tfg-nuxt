@@ -1,61 +1,43 @@
 <script setup lang="ts">
-import { createColumnHelper } from "@tanstack/vue-table";
-const client = useSupabaseClient();
+  import { createColumnHelper } from "@tanstack/vue-table";
+  const client = useSupabaseClient();
 
-const logsBackend = ref(undefined);
-onMounted(async () => {
-  const { data } = await client
-    .from("scans")
-    .select(
-      "result_id, severity, alert, created, profile_id, profiles(full_name)",
-    );
-  logsBackend.value = data;
-});
+  const { data: recomendationsBackend } = await client
+    .from("recomendations")
+    .select();
 
-type Log = {
-  result_id: string;
-  severity: string;
-  alert: string;
-  created: string;
-  user_full_name: string;
+type Recomendation = {
+  alert_name: string;
+  abstract: string;
+  recomendation: string;
 };
 
-const columnHelper = createColumnHelper<Log>();
+const columnHelper = createColumnHelper<Recomendation>();
 const columns = [
-  columnHelper.accessor("result_id", {
-    header: () => "id",
+  columnHelper.accessor("alert_name", {
+    header: () => "alert_name",
     footer: (props) => props.column.id,
   }),
-  columnHelper.accessor("severity", {
-    header: () => "severity",
+  columnHelper.accessor("abstract", {
+    header: () => "abstract",
     footer: (props) => props.column.id,
   }),
-  columnHelper.accessor("alert", {
-    header: () => "alert",
-    footer: (props) => props.column.id,
-  }),
-  columnHelper.accessor("created", {
-    header: () => "created",
-    cell: (info) => formatDate(info.getValue()),
-    footer: (props) => props.column.id,
-  }),
-  columnHelper.accessor("profiles", {
-    header: () => "Scanned by",
-    cell: (info) => info.getValue()?.full_name,
+  columnHelper.accessor("recomendation", {
+    header: () => "recomendation",
     footer: (props) => props.column.id,
   }),
 ];
 </script>
 
 <template>
-  <Page title="Logs">
-    <div class="flex justify-end">
-      <Button class="mb-2">
-        <NuxtLink to="/logs/scan">Scan new log</NuxtLink>
-      </Button>
-    </div>
-    <div v-if="!!logsBackend">
-      <Table :columns="columns" :tableData="logsBackend" />
-    </div>
+  <Page title="Recomendations">
+  <div class="flex justify-end">
+    <Button class="mb-2">
+      <NuxtLink to="/logs/scan">Add new recomendation</NuxtLink>
+    </Button>
+  </div>
+  <div v-if="!!recomendationsBackend">
+    <Table :columns="columns" :tableData="recomendationsBackend" />
+  </div>
   </Page>
 </template>

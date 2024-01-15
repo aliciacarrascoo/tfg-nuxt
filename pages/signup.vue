@@ -6,8 +6,6 @@ const email = ref(undefined);
 const password = ref(undefined);
 const passwordConfirmation = ref(undefined);
 const alertStore = useAlertStore();
-    alertStore.addAlert('lorem ipsum', 'Sign up error', 'danger');
-    alertStore.addAlert('lorem ipsum', 'Sign up error', 'danger');
 
 const signUpNewUser = () => {
   if (password.value !== passwordConfirmation.value) return;
@@ -19,7 +17,10 @@ const signUpNewUser = () => {
     },
   });
   if (error) {
-    alertStore.addAlert(error.value, 'Sign up error', 'danger');
+    alertStore.addTemporaryAlert(error.value, 'Sign up error', 'danger');
+  }else{
+    alertStore.addTemporaryAlert("You have successfully registered!", "Success", "success");
+    navigateTo("/login");
   }
 };
 </script>
