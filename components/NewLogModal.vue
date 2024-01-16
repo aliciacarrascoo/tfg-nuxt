@@ -1,4 +1,15 @@
 <script setup lang="ts">
+import { Dialog, DialogPanel, DialogTitle } from "@headlessui/vue";
+  const props = defineProps({
+  isOpen: {
+    type: Boolean,
+    default: false,
+  },
+  setIsOpen: {
+    type: Function,
+    default: () => {},
+  },
+});
 const logs = ref();
 const fileInput = ref(null);
 const client = useSupabaseClient();
@@ -72,35 +83,49 @@ async function analizeLogs() {
   loadingStore.setLoading(false);
   navigateTo(`/logs/scan/${data[0].result_id}`);
 }
-</script>
 
+function closeModal() {
+  props.setIsOpen(false);
+}
+</script>
 <template>
-  <Page title="newLog.scanANewLog">
-    <h4 class="mb-2">{{ $t("newLog.introduceYourCortexLogs") }}</h4>
-    <textarea
-      class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-      v-model="logs"
-      rows="15"
-      placeholder="Logs as JSON"
-    />
-    <div class="w-100 my-4">
-      <div class="mb-2">{{ $t("newLog.orImportFromFile") }}</div>
-      <input
-        ref="fileInput"
-        type="file"
-        class="form-control-file"
-        accept=".json"
-        @change="fileChange"
+    <Dialog @close="closeModal" class="relative z-10" :open="props?.isOpen">
+      <div class="fixed inset-0 bg-black/25" />
+      <div class="fixed inset-0 overflow-y-auto">
+        <div
+          class="flex min-h-full items-center justify-center p-4 text-center"
+        >
+          <DialogPanel
+            class="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
+          >
+                <h4 class="mb-2">{{ $t("newLog.introduceYourCortexLogs") }}</h4>
+            <textarea
+        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        v-model="logs"
+        rows="15"
+        placeholder="Logs as JSON"
       />
-    </div>
-    <Button @click="analizeLogs" buttonType="text">
-      <div class="flex items-center">
-        <span>
-          {{ $t("newLog.analizeLogs") }}
-        </span>
-        <Icon name="ic:round-arrow-forward-ios" class="ml-2" />
+      <div class="w-100 my-4">
+        <div class="mb-2">{{ $t("newLog.orImportFromFile") }}</div>
+        <input
+          ref="fileInput"
+          type="file"
+          class="form-control-file"
+          accept=".json"
+          @change="fileChange"
+        />
       </div>
-    </Button>
-    <div id="json-result"></div>
-  </Page>
+      <Button @click="analizeLogs" buttonType="text">
+        <div class="flex items-center">
+          <span>
+            {{ $t("newLog.analizeLogs") }}
+          </span>
+          <Icon name="ic:round-arrow-forward-ios" class="ml-2" />
+        </div>
+      </Button>
+            <div id="json-result"></div>
+          </DialogPanel>
+        </div>
+      </div>
+    </Dialog>
 </template>

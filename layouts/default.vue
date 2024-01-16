@@ -121,10 +121,14 @@ const logout = async () => {
       <div class="relative">
         <Alert :type="appAlert.type" :title="appAlert.title" :text="appAlert.text" v-for="appAlert in alertQueue" />
       </div>
-      <div class="flex-1">
+      <div class="flex-1 min-h-0">
         <slot />
       </div>
   </div>
+<footer class="fixed bottom-0">
+      <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2024 <a class="hover:underline">Project for Universitat de Barcelona by Alicia Carrasco</a>
+    </span>
+</footer>
 </template>
 
 <style>

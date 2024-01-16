@@ -1,6 +1,6 @@
 <template>
   <article
-    class="p-6 text-base bg-white rounded-lg dark:bg-gray-900"
+    class="p-6 text-base rounded-lg dark:bg-gray-900"
     v-if="!!props.comment"
   >
     <footer class="flex justify-between items-center mb-2">
@@ -115,20 +115,15 @@ const props = defineProps({
     required: true,
   },
 });
-console.log(props.comment);
 const showForm = ref(false);
 const menuIsOpen = ref(false);
 const client = useSupabaseClient();
-const { data } = await useAsyncData("nose", async () => {
   const { data } = await client
     .from(`${props.table}_comments`)
     .select(
       `id, content, created_at, profile_id: id, profiles (avatar_url, full_name )`,
     )
     .eq("parent_id", props.comment?.id);
-  return data;
-});
-
 const removeComment = async () => {
   await client
     .from(`${props.table}_comments`)
@@ -137,7 +132,7 @@ const removeComment = async () => {
   reloadNuxtApp();
 };
 
-const sortedData = data?.value?.sort((a, b) => {
+const sortedData = data.sort((a, b) => {
   const nameA = a.created_at;
   const nameB = b.created_at;
   if (a.created_at < b.created_at) {
@@ -148,4 +143,5 @@ const sortedData = data?.value?.sort((a, b) => {
   }
   return 0;
 });
+console.log(data);
 </script>

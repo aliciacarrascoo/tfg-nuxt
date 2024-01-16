@@ -38,7 +38,7 @@ const loadingStore = useLoadingStore();
 const postComment = (currentUserProfile) => async () => {
   loadingStore.setLoading(true);
   await client.from(`${props.table}_comments`).insert({
-    scan_id: props.id,
+    [`${props.table}_id`]: props.id,
     content: text.value,
     parent_id: props.parentId,
     profile_id: currentUserProfile?.value?.id,

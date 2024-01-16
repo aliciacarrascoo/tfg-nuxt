@@ -1,12 +1,18 @@
 <script setup lang="ts">
   import { createColumnHelper } from "@tanstack/vue-table";
   const client = useSupabaseClient();
+  const modalIsOpen = ref(false);
+  const clickedLog = ref({});
 
+function setModalIsOpen(value: boolean) {
+  modalIsOpen.value = value;
+}
   const { data: recomendationsBackend } = await client
     .from("recomendations")
     .select();
 
 type Recomendation = {
+  id: string;
   alert_name: string;
   abstract: string;
   recomendation: string;
@@ -15,7 +21,7 @@ type Recomendation = {
 const columnHelper = createColumnHelper<Recomendation>();
 const columns = [
   columnHelper.accessor("alert_name", {
-    header: () => "alert_name",
+    header: () => "alert name",
     footer: (props) => props.column.id,
   }),
   columnHelper.accessor("abstract", {
@@ -27,17 +33,18 @@ const columns = [
     footer: (props) => props.column.id,
   }),
 ];
+
+const onRowClicked = (row) => {
+  clickedLog.value = row.original;
+  modalIsOpen.value = true;
+}
 </script>
 
 <template>
+  <RecomendationModal :id="clickedLog?.recomendation_id" :title="clickedLog?.alert_name" :abstract="clickedLog?.abstract" :text="clickedLog?.recomendation" :isOpen="modalIsOpen" :setIsOpen="setModalIsOpen"/>
   <Page title="Recomendations">
-  <div class="flex justify-end">
-    <Button class="mb-2">
-      <NuxtLink to="/logs/scan">Add new recomendation</NuxtLink>
-    </Button>
-  </div>
   <div v-if="!!recomendationsBackend">
-    <Table :columns="columns" :tableData="recomendationsBackend" />
+    <Table :columns="columns" :tableData="recomendationsBackend" :onRowClicked="onRowClicked"/>
   </div>
   </Page>
 </template>

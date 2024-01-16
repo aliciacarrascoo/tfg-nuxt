@@ -1,22 +1,21 @@
 <template>
   <section
-    class="bg-white dark:bg-gray-900 py-8 lg:py-16 antialiased"
+    class="dark:bg-gray-900 py-8 lg:py-16 antialiased"
     v-if="!!sortedData"
   >
-    <div class="max-w-2xl mx-auto px-4">
       <div class="flex justify-between items-center mb-6">
         <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">
           Discussion
         </h2>
       </div>
-      <CommentForm :table="props.table" :id="props.id" />
+      <CommentForm :table="props.table" :id="props.id" :parentId="undefined"/>
       <Comment
         :comment="comment"
         :table="props.table"
         :id="props.id"
         v-for="comment in sortedData"
+        :key="props.id"
       />
-    </div>
   </section>
 </template>
 

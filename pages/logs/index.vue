@@ -19,7 +19,7 @@ type Log = {
   created: string;
   user_full_name: string;
 };
-
+const modalIsOpen = ref(false);
 const columnHelper = createColumnHelper<Log>();
 const columns = [
   columnHelper.accessor("result_id", {
@@ -49,13 +49,22 @@ const columns = [
 const onRowClicked = (row) => {
   navigateTo(`/logs/scan/${row.original.result_id}`);
 };
+
+const newLogClicked = () => {
+  modalIsOpen.value = true;
+}
+
+function setModalIsOpen(value: boolean) {
+  modalIsOpen.value = value;
+}
 </script>
 
 <template>
   <Page title="Logs">
+  <NewLogModal :isOpen="modalIsOpen" :setIsOpen="setModalIsOpen"/>
     <div class="flex justify-end">
-      <Button class="mb-2">
-        <NuxtLink to="logs/scan">Scan new log</NuxtLink>
+      <Button @click="newLogClicked" class="mb-2">
+        Scan new log
       </Button>
     </div>
     <div v-if="!!logsBackend">
