@@ -12,7 +12,6 @@ const client = useSupabaseClient();
 const { data } = await useAsyncData("scans", async () => {
   return await client.from("scans").select("*").eq("result_id", props.id);
 });
-console.log(data, "scan");
 const {
   sha256,
   created,
@@ -28,6 +27,7 @@ const {
   alert_description,
   log,
 } = data._rawValue.data[0];
+const { data:scanRecomendation } = await client.from("recomendations").select().eq("alert_name", alert).single();
 
 const notFound = "Not found";
 
@@ -69,7 +69,7 @@ const types = {
       <h4 class="flex items-center text-4xl font-semibold dark:text-white mb-5">
         Summary
         <span
-          class="bg-blue-100 text-blue-800 font-semibold text-lg px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-2"
+          class="bg-blue-100 text-blue-800 font-semibold text-lg px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-2 mr-2"
           >ID: {{ id }}
         </span>
         <span :class="types[severity]?.class || types['Informational']">{{
@@ -78,7 +78,11 @@ const types = {
       </h4>
       <!------RECOMENDATION------>
       <div>
-        <Button>See recomendation</Button>
+        <Button>
+          <NuxtLink :to="`/recomendations/${scanRecomendation.recomendation_id}`">
+            See recomendation
+          </NuxtLink>
+        </Button>
       </div>
     </div>
     <!------SHA256------>

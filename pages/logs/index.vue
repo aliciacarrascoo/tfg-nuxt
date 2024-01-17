@@ -1,17 +1,26 @@
 <script setup lang="ts">
 import { createColumnHelper } from "@tanstack/vue-table";
 const client = useSupabaseClient();
+const currentUserProfile = await useCurrentUserProfile();
 
-const logsBackend = ref(undefined);
-onMounted(async () => {
-  const { data } = await client
+const { data: userOrganization } = await client.from("profiles").select("organization_id").eq("id", currentUserProfile.value.id).single();
+const { data: organizationScans } = await client
     .from("scans")
     .select(
       "result_id, severity, alert, created, profile_id, profiles(full_name)",
-    );
-  logsBackend.value = data;
-});
+    ).eq("organization_id", userOrganization?.organization_id).neq("profile_id", currentUserProfile.value.id);
 
+const { data: userScans } = await client
+    .from("scans")
+    .select(
+      "result_id, severity, alert, created, profile_id, profiles(full_name)",
+    ).eq("profile_id", currentUserProfile.value.id);
+
+const logsBackend = [];
+logsBackend.push(...organizationScans);
+logsBackend.push(...userScans);
+
+console.log(organizationScans, userScans, logsBackend);
 type Log = {
   result_id: string;
   severity: string;

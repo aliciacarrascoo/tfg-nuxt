@@ -16,7 +16,7 @@
         </div> 
       </div>
       <div class="basis-3/4 overflow-auto p-4">
-        <div class="flex flex-row items-center justify-between">
+        <div class="flex flex-row items-center justify-between" v-if="route.params.id !== 'undefined'">
           <h2 v-if="!isEditing" class="mb-3 text-4xl max-w-[70%] truncate font-bold dark:text-white">{{ alertNameInput}} </h2>  
           <textarea rows="1" class="w-50 mb-3 rounded-md text-4xl" v-if="isEditing" v-model="alertNameInput" />
             <div class="ml-2 flex items-center" :class="{'opacity-50': currentUserProfile?.role !== 'admin'}">
@@ -34,12 +34,13 @@
         </Button>
           </div>
         </div>
-        <p v-if="!isEditing" class="text-gray-500 dark:text-gray-400 text-4sm">{{ abstractInput }}</p>
-        <textarea rows="3" class="w-full rounded-md" v-if="isEditing" v-model="abstractInput" />
-        <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
-        <div>
-          <h4 class="font-semibold mb-3 text-xl font-bold dark:text-white">Recomendation</h4>
+        <div class="font-medium text-lg" v-if="route.params.id === 'undefined'">
+          404. No recomendation yet. You can create one directly from the database
         </div>
+        <p v-if="!isEditing" class="text-gray-500 dark:text-gray-400 text-4sm">Abstract: {{ abstractInput }}</p>
+        <textarea rows="3" class="w-full rounded-md" v-if="isEditing" v-model="abstractInput" />
+        <hr class="h-px my-8 mt-10 bg-gray-200 border-0 dark:bg-gray-700" v-if="route.params.id !== 'undefined'">
+        <h1 class="m-0 mb-4 text-4xl font-bold leading-none tracking-tight text-gray-900"><mark class="p-0 text-black bg-white rounded dark:bg-blue-500" v-if="route.params.id !== 'undefined'">Recomendation</mark></h1>
         <p v-if="!isEditing" class="text-gray-1000 text-lg leading-relaxed text-justify dark:text-gray-400">{{ recomendationInput }}</p>
         <textarea rows="40" class="w-full" v-if="isEditing" v-model="recomendationInput" />
         <CommentSection table="recomendation" :id="route.params.id" />
@@ -58,9 +59,9 @@ const alertStore = useAlertStore();
 
 const { data: allRecomendations} = await client.from("recomendations").select(); 
 const { data } = await client.from("recomendations").select().eq("recomendation_id", route.params.id).single();
-const recomendationInput = ref(data.recomendation);
-const abstractInput = ref(data.abstract);
-const alertNameInput = ref(data.alert_name);
+const recomendationInput = ref(data?.recomendation);
+const abstractInput = ref(data?.abstract);
+const alertNameInput = ref(data?.alert_name);
 const newRecomendationObject = ref(data);
 
 watch([recomendationInput, abstractInput,alertNameInput], ([newRecomendation, newAbstractInput, newAlertName]) => {

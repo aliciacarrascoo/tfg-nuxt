@@ -44,7 +44,7 @@ const { data } = await useAsyncData(
     return data;
   },
 );
-const sortedData = data?.value.sort((a, b) => {
+const sortedData = data?.value?.sort((a, b) => {
   const nameA = a.created_at;
   const nameB = b.created_at;
   if (a.created_at < b.created_at) {
