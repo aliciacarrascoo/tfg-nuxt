@@ -24,11 +24,9 @@
   },
 });
 
-console.log({props});
 function closeModal() {
   props.setIsOpen(false);
 }
-const recomendationUrl = `/recomendations/${props.id}`;
 
 </script>
 
@@ -46,7 +44,7 @@ const recomendationUrl = `/recomendations/${props.id}`;
             <div class="mt-4">
               <p class="text-sm font-light text-blue-500 dark:text-gray-400">
                 <NuxtLink
-                  :to="recomendationUrl"
+                  :to="`/recomendations/${props.id}`"
                   class="font-medium text-primary-600 hover:underline dark:text-primary-500"
                   >See recomendation</NuxtLink
                 >

@@ -124,6 +124,7 @@ const client = useSupabaseClient();
       `id, content, created_at, profile_id: id, profiles (avatar_url, full_name )`,
     )
     .eq("parent_id", props.comment?.id);
+
 const removeComment = async () => {
   await client
     .from(`${props.table}_comments`)
@@ -143,5 +144,4 @@ const sortedData = data.sort((a, b) => {
   }
   return 0;
 });
-console.log(data);
 </script>

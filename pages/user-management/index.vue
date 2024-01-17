@@ -15,7 +15,7 @@ function setCreateOrganizationModalIsOpen(value: boolean) {
 
 const client = useSupabaseClient();
 const { data: profiles } = await useAsyncData("profiles", async () => {
-  const { data } = await client.from("profiles").select("*");
+  const { data } = await client.from("profiles").select();
   return data;
 });
 

@@ -118,7 +118,7 @@ const logout = async () => {
         class="bg-blue-600 h-1.5 rounded-full dark:bg-blue-500 custom-transition"
       ></div>
     </div>
-      <div class="relative">
+      <div class="fixed right-0">
         <Alert :type="appAlert.type" :title="appAlert.title" :text="appAlert.text" v-for="appAlert in alertQueue" />
       </div>
       <div class="flex-1 min-h-0">

@@ -79,7 +79,6 @@ async function analizeLogs() {
   };
   const { data, error } = await client.from("scans").insert(body).select();
 
-  console.log(data, "data");
   loadingStore.setLoading(false);
   navigateTo(`/logs/scan/${data[0].result_id}`);
 }
