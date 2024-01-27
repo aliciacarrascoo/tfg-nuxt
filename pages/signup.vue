@@ -19,7 +19,7 @@ const signUpNewUser = () => {
   if (error) {
     alertStore.addTemporaryAlert(error.value, 'Sign up error', 'danger');
   }else{
-    alertStore.addTemporaryAlert("You have successfully registered!", "Success", "success");
+    alertStore.addTemporaryAlert("Confirm your mail to be able to login", "Success", "success");
     navigateTo("/login");
   }
 };
